@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <link href="/css/styles.css" type="text/css" rel="stylesheet"> -->
+
+    <title>API Task</title>
+
+</head>
+<body>
+
+    <select id='lattitude'>
+        <option value="56.715890">56.715890</option> <!--Change these to inputs after its working-->
+    </select>
+    <select id='longitude'>
+        <option value="-1.718980">-1.718980</option>
+    </select>
+
+    <button id="btnRun">Run</button>
+
+    <div id="divResults">
+                <table>
+                    <th>Weather</th>
+                    <tr>
+                        <td align="right">Temperature:</td>
+                        <td id="txtTemperature">
+                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">Humidity:</td>
+                        <td id="txtHumidity">
+    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">Wind Direction:</td>
+                        <td id="txtWindDirection">
+    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">Wind Speed:</td>
+                        <td id="txtWindSpeed">
+    
+                        </td>
+                    </tr>
+                </table>        
+    </div>
+    <br>
+    <div>
+        <button id="btnRunTZ">Run</button>
+        <table>
+            <th>Time Zones</th>
+            <tr>
+                <td align="right">Sunrise:</td>
+                <td id="sunrise"></td>
+            </tr>
+            <tr>
+                <td>Sunset:</td>
+                <td id="sunset"></td>
+            </tr>
+            <tr>
+                <td>Time Zone ID:</td>
+                <td id="timezoneId"></td>
+            </tr>
+            <tr>
+                <td>Country Name:</td>
+                <td id="countryName"></td>
+            </tr>
+        </table>
+    </div>
+        
+    </h1>
+    <script type="application/javascript" src="../task/libs/js/jquery-2.2.3.min.js"></script>
+    <script type="application/javascript" src="../task/libs/js/script.js"></script>
+    
+</body>
+</html>
