@@ -1,7 +1,7 @@
     $('#btnRun').click(function() {
 
         $.ajax({
-            url: "libs/php/weatherInfo.php",
+            url: "../task/libs/php/weatherInfo.php",
             type: 'POST',
             dataType: 'json',
             data: {
@@ -15,10 +15,12 @@
 
                 if (result.status.name == 'ok') {
                         // when using the result, try using data without the 0, see if that works
-                    $('#txtTemperature').html(result['data'][0]['temperature']);
-                    $('#txtHumidity').html(result['data'][0]['humidity']);
-                    $('#txtWindDirection').html(result['data'][0]['windDirection']);
-                    $('#txtWindSpeed').html(result['data'][0]['windSpeed']);
+                    $('#Temperature').html(result['data']['temperature']);
+                    $('#Humidity').html(result['data']['humidity']);
+                    $('#WindDirection').html(result['data']['windDirection']);
+                    $('#WindSpeed').html(result['data']['windSpeed']);
+
+                    
                     
                      
                     
@@ -37,7 +39,7 @@
     $('#btnRunTZ').click(function() {
 
         $.ajax({
-            url: "libs/php/timeZone.php",
+            url: "../task/libs/php/timeZone.php",
             type: 'POST',
             dataType: 'json',
             data: {
@@ -51,13 +53,13 @@
 
                 if (result.status.name == 'ok') {
                         // when using the result, try using data without the 0, see if that works
-                    $('#sunrise').html(result['data']['sunrise']);
-                    $('#sunset').html(result['data']['sunset']);
-                    $('#timezoneId').html(result['data']['timezoneId']);
-                    $('#countryName').html(result['data']['countryName']);
+                    $('#sunrise').html(result['sunrise']);
+                    $('#sunset').html(result['sunset']);
+                    $('#timezoneId').html(result ['timezoneId']);
+                    $('#countryName').html(result ['countryName']);
                     
                      
-                    
+                        
                 }
 
             },
