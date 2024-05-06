@@ -9,10 +9,10 @@
     
     // Below is the test url that doesnt use the $_REQUEST data
 
-    $url='http://api.geonames.org/findNearByWeatherJSON?formatted=true&lat=56.715890&lng=-1.718980&username=flightltd&style=full';
+    // $url='http://api.geonames.org/findNearByWeatherJSON?formatted=true&lat=56.715890&lng=-1.718980&username=flightltd&style=full';
 
 
-    
+
     $ch = curl_init();  // This is creatng the curl request
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -30,6 +30,7 @@
     $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
     $output['data'] = $decode['weatherObservation'];
     $output['url'] = $url;
+
 
     header('Content-Type: application/json; charset=UTF-8');
 

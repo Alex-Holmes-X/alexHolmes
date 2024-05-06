@@ -13,7 +13,7 @@
 <body>
 
     <select id='lattitude'>
-        <option value="56.715890">56.715890</option> <!--Change these to inputs after its working-->
+        <option value="53.715890">53.715890</option> <!--Change these to inputs after its working-->
     </select>
     <select id='longitude'>
         <option value="-1.718980">-1.718980</option>
@@ -26,25 +26,27 @@
                     <th>Weather</th>
                     <tr>
                         <td align="right">Temperature:</td>
-                        <td id="txtTemperature">
-                        
+                        <td id="Temperature">
+                            
                         </td>
+                        <td>℃</td>
                     </tr>
                     <tr>
                         <td align="right">Humidity:</td>
-                        <td id="txtHumidity">
-    
+                        <td id="Humidity">
+                            
                         </td>
+                        <td>%</td>
                     </tr>
                     <tr>
                         <td align="right">Wind Direction:</td>
-                        <td id="txtWindDirection">
+                        <td id="WindDirection">
     
                         </td>
                     </tr>
                     <tr>
                         <td align="right">Wind Speed:</td>
-                        <td id="txtWindSpeed">
+                        <td id="WindSpeed">
     
                         </td>
                     </tr>
@@ -60,15 +62,15 @@
                 <td id="sunrise"></td>
             </tr>
             <tr>
-                <td>Sunset:</td>
+                <td align="right">Sunset:</td>
                 <td id="sunset"></td>
             </tr>
             <tr>
-                <td>Time Zone ID:</td>
+                <td align="right">Time Zone ID:</td>
                 <td id="timezoneId"></td>
             </tr>
             <tr>
-                <td>Country Name:</td>
+                <td align="right">Country Name:</td>
                 <td id="countryName"></td>
             </tr>
         </table>
@@ -77,6 +79,5 @@
     </h1>
     <script type="application/javascript" src="../task/libs/js/jquery-2.2.3.min.js"></script>
     <script type="application/javascript" src="../task/libs/js/script.js"></script>
-    
 </body>
 </html>
