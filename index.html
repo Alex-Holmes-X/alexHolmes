@@ -11,10 +11,11 @@
 
 </head>
 <body>
-
+    <h2>Weather Checker</h2>
     <select id='lattitude'>
-        <option value="53.715890">53.715890</option> <!--Change these to inputs after its working-->
+        <option value="53.715890">53.715890</option>
     </select>
+    
     <select id='longitude'>
         <option value="-1.718980">-1.718980</option>
     </select>
@@ -53,6 +54,7 @@
                 </table>        
     </div>
     <br>
+    <h2>Time Zone Info</h2>
     <div>
         <button id="btnRunTZ">Run</button>
         <table>
@@ -75,9 +77,55 @@
             </tr>
         </table>
     </div>
-        
-    </h1>
+    <br>
+
+    <h2>Airport Weather Checker</h2>
+    <div>
+        <select id="airport">
+            <option value="EGNM">Leeds / Bradford Airport</option>
+            <option value="EGLL">London Heathrow Airport</option>
+            <option value="EGCC">Manchester Airport</option>
+            <option value="EGNX">East Midlands Aiport</option>
+            <option value="EGNT">Newcastle Airport</option>
+        </select>
+
+        <button id="btnRunAirport">Run</button>
+
+        <table>
+            <tr>
+                <td align="right">ICAO Code:</td>
+                <td id="APICAO"></td>
+            </tr>
+            <tr>
+                <td align="right">Elevation:</td>
+                <td id="APElevation"></td>
+            </tr>
+            <tr>
+                <td align="right">Clouds:</td>
+                <td id="APClouds"></td>
+            </tr>
+            <tr>
+                <td align="right">Dew Point:</td>
+                <td id="APDewPoint"></td>
+            </tr>
+            <tr>
+                <td align="right">Temperature:</td>
+                <td id="APTemperature"></td>
+            </tr>
+            <tr>
+                <td align="right">Humidity:</td>
+                <td id="APHumidity"></td>
+            </tr>
+            <tr>
+                <td align="right">Station Name:</td>
+                <td id="APStationName"></td>
+            </tr>
+
+        </table>
+    </div>
+        <br><br>
     <script type="application/javascript" src="../task/libs/js/jquery-2.2.3.min.js"></script>
     <script type="application/javascript" src="../task/libs/js/script.js"></script>
 </body>
 </html>
+
