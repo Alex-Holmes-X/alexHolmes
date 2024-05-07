@@ -52,14 +52,52 @@
                 console.log(JSON.stringify(result));
 
                 if (result.status.name == 'ok') {
-                        // when using the result, try using data without the 0, see if that works
-                    $('#sunrise').html(result['sunrise']);
-                    $('#sunset').html(result['sunset']);
-                    $('#timezoneId').html(result ['timezoneId']);
-                    $('#countryName').html(result ['countryName']);
+                        
+                    $('#sunrise').html(result['data']['sunrise']);
+                    $('#sunset').html(result['data']['sunset']);
+                    $('#timezoneId').html(result ['data']['timezoneId']);
+                    $('#countryName').html(result ['data']['countryName']);
                     
                      
-                        
+
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                
+                console.log(jqXHR);
+            }
+        });
+    });
+
+    // Airport Weather API Call Function
+
+    $('#btnRunAirport').click(function() {
+
+        $.ajax({
+            url: "../task/libs/php/airportWeather.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                airport: $('#airport').val()
+
+            },
+            success: function(result) {
+
+                console.log(JSON.stringify(result));
+
+                if (result.status.name == 'ok') {
+                        // when using the result, try using data without the 0, see if that works
+
+                    $('#APICAO').html(result['data']['ICAO']);
+                    $('#APElevation').html(result['data']['elevation']);
+                    $('#APClouds').html(result['data']['clouds']);
+                    $('#APDewPoint').html(result['dat§a']['dewPoint']);
+                    $('#APTemperature').html(result['data']['temperature']);
+                    $('#APHumidity').html(result['data']['humidity']);
+                    $('#APStationName').html(result['data']['stationName']);
+                                    
+                                       
                 }
 
             },
