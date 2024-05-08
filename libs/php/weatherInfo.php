@@ -5,7 +5,7 @@
 
     $executionStartTime = microtime(true);
 
-    $url='http://api.geonames.org/findNearByWeatherJSON?formatted=true&lat=' . $_REQUEST['lattitude'] . '&lng=' . $_REQUEST['longitude'] . '&username=flightltd&style=full';
+    $url='http://api.geonames.org/findNearByWeatherJSON?formatted=true&lat=' . $_REQUEST['lattitude'] . '&lng=' . $_REQUEST['longitude'] . '&username=ajay81&style=full';
     
     // Below is the test url that doesnt use the $_REQUEST data
 

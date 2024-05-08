@@ -20,8 +20,7 @@
                     $('#WindDirection').html(result['data']['windDirection']);
                     $('#WindSpeed').html(result['data']['windSpeed']);
 
-                    
-                    
+                                  
                      
                     
                 }
@@ -92,7 +91,7 @@
                     $('#APICAO').html(result['data']['ICAO']);
                     $('#APElevation').html(result['data']['elevation']);
                     $('#APClouds').html(result['data']['clouds']);
-                    $('#APDewPoint').html(result['dat§a']['dewPoint']);
+                    $('#APDewPoint').html(result['data']['dewPoint']);
                     $('#APTemperature').html(result['data']['temperature']);
                     $('#APHumidity').html(result['data']['humidity']);
                     $('#APStationName').html(result['data']['stationName']);

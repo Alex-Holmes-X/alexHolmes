@@ -5,25 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- <link href="/css/styles.css" type="text/css" rel="stylesheet"> -->
+    <link href="/css/styles.css" type="text/css" rel="stylesheet">
 
     <title>API Task</title>
 
 </head>
 <body>
     <h2>Weather Checker</h2>
-    <select id='lattitude'>
-        <option value="53.715890">53.715890</option>
-    </select>
     
-    <select id='longitude'>
-        <option value="-1.718980">-1.718980</option>
-    </select>
+    <input type="text" id="lattitude" value="53.709984" >
+    <input type="text" id="longitude" value="-1.697018">
 
     <button id="btnRun">Run</button>
 
     <div id="divResults">
                 <table>
+                    <br>
                     <th>Weather</th>
                     <tr>
                         <td align="right">Temperature:</td>
@@ -51,11 +48,39 @@
     
                         </td>
                     </tr>
-                </table>        
+                </table>
+                <br>
+                <table>
+                    <th>Example Co-ordinates</th>
+                    <th>Lattitude</th>
+                    <th>Longitude</th>
+
+                    <tr>
+                        <td>Apple Headquaters</td>
+                        <td>37.334606</td>
+                        <td>-122.009102</td>
+                    </tr>
+                    <tr>
+                        <td>Buckingham Palace</td>
+                        <td>51.501476</td>
+                        <td>-0.140634</td>
+                    </tr>
+                    <tr>
+                        <td>Statue of Liberty NY</td>
+                        <td>40.689247</td>
+                        <td>-74.044502</td>
+                    </tr>
+                    <tr>
+                        <td>Stone Henge UK</td>
+                        <td>51.178844</td>
+                        <td>-1.826323</td>
+                    </tr>
+                </table>    
     </div>
     <br>
     <h2>Time Zone Info</h2>
     <div>
+        <p>The co-ordinates above are used to populate this information</p>
         <button id="btnRunTZ">Run</button>
         <table>
             <th>Time Zones</th>

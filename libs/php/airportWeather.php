@@ -6,7 +6,7 @@
     $executionStartTime = microtime(true);
 
     
-    $url='http://api.geonames.org/weatherIcaoJSON?ICAO=' . $_REQUEST['airport'] .'&username=flightltd&style=full';
+    $url='http://api.geonames.org/weatherIcaoJSON?ICAO=' . $_REQUEST['airport'] .'&username=ajay81&style=full';
     
 
 
