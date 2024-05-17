@@ -1,0 +1,17 @@
+1: Added the route to the currentLocationInfo PHP file but need to fill in the rest of it
+
+2: Need to create the current location info section in the HTML file
+
+3: Tidy up the script.js file as it looks shit
+
+4: The latitude and longitude data is in the leaflet.js file, this loands on initial load
+
+5: Sort out the locationInformation.php file as the url isnt doing anything, maybe swap it with the other
+    php file to fill in the current location data
+
+6: Now got the location working from the initial load - Juts add any more boxs i may need.
+
+7: now need to add the weather info
+
+8: to make the weather icon work, you need to add the code in dynamically to make sure it shows the correct
+   icon  
