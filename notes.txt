@@ -14,4 +14,14 @@
 7: now need to add the weather info
 
 8: to make the weather icon work, you need to add the code in dynamically to make sure it shows the correct
-   icon  
+   icon 
+
+9: Need to make it so you can seleect a country and the map centres on the co-ordinates
+
+
+
+// Add info 
+
+
+Leeds Utd latitude - 53.777782 - -1.573049
+ 
