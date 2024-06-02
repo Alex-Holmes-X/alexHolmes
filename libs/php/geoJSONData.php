@@ -6,11 +6,10 @@
     $executionStartTime = microtime(true);
 
     // Url for location data
-    $url = 'https://api.api-ninjas.com/v1/airports?country=us'; 
+    $url = './libs/json/countryBorders.geo.json';
 
     
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_HTTPHEADER,array('X-Api-Key : JE2F+mZToBM002gHJJzTwQ==iNrHKwt9htESK6Ek'));
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,$url);

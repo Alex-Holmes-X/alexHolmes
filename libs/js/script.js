@@ -18,7 +18,7 @@ $(document).ready(function() {
             data: {
                 latitude: latitude,
                 longitude: longitude
-    
+                
             },
             success: function(result) {
     
@@ -28,7 +28,11 @@ $(document).ready(function() {
                         
                     $('#current-country').html(result['data']['results'][0]['components']['country']);
                     $('#current-county').html(result['data']['results'][0]['components']['state_district']);
-                    $('#current-area').html(result['data']['results'][0]['components']['village']);                     
+                    $('#current-village').html(result['data']['results'][0]['components']['village']);
+                    $('#current-neighbourhood').html(result['data']['results'][0]['components']['neighbourhood']); 
+                    $('#current-city').html(result['data']['results'][0]['components']['city']); 
+                    
+                //    Make a function to hide neighbourhood if blank
                     
                 }
     
@@ -37,6 +41,7 @@ $(document).ready(function() {
                 
                 console.log(jqXHR);
             }
+
         });
 
                     // This is the weather API call
@@ -66,15 +71,31 @@ $(document).ready(function() {
                                 $('#feels-like').html(result['data']['current']['feels_like']);
                                 $('#humidity').html(result['data']['current']['humidity']);
                                 $('#wind-speed').html(result['data']['current']['wind_speed']);
+                                $('#time-zone').html(result['data']['timezone']);
+                                
                                 
                                 // This is used to create the weather icon
                                 var iconCode = (result['data']['current']['weather'][0]['icon']);
                                 
                                 var iconUrl = 'https://openweathermap.org/img/wn/' + iconCode + '@2x.png';
 
-                                $('#weatherIcon').attr('src', iconUrl);
+                                const sunriseTimestamp = (result['data']['current']['sunrise']) * 1000;
+                                const sunriseDate = new Date(sunriseTimestamp);
+
+                                const sunsetTimestamp = (result['data']['current']['sunset']) * 1000;
+                                const sunsetDate = new Date(sunsetTimestamp);
+
+                                var sunrise = sunriseDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+                                console.log(sunrise);
+                                var sunset = sunsetDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+                                console.log(sunset)
+
+                                $('#weatherIcon').attr('src', iconUrl);                        
+
+                                $('#sunrise').html(sunrise);
+                                $('#sunset').html(sunset);
                                 
-                                
+
                             }
                 
                         },
@@ -156,11 +177,10 @@ $(document).ready(function() {
         }
 
     })
-        
 
 });
 
-$('#btnCountries').click(function() {
+$('#countrySelect').on('change', function() {
 
     if (document.getElementById('countrySelect').value === 'gbr') {
         map.flyTo([51.509865, -0.118092], 8)
@@ -175,6 +195,9 @@ $('#btnCountries').click(function() {
     } else if (document.getElementById('countrySelect').value === 'ind') {
         map.flyTo([28.644800, 77.216721], 8)
     };
+
+
+
 
 
     $.ajax({
@@ -248,18 +271,114 @@ $('#btnCountries').click(function() {
 
     })
 
-    
 
 
 });
 
+// This is just to make sure i can do the maths on the inputted values
 
-// Location Buttons
+$('#convertButton').on('click', function() {
 
-$('#countryUsa').click(function() {
-    map.flyTo([40.737, -73.923], 8)
+    // When the api function has been sorted, take the inputted value, * it by the selected 
+    // currency and then sumaryise the total
+    
+    const convertedAmount = document.getElementById('amount').value;
+
+    const roundedTotal = Math.round(convertedAmount * 100) / 100;
+
+    const conversionRate = 0.852362;
+
+    const convertedTotal = roundedTotal * conversionRate;
+
+    $('#convertedTotal').html(convertedTotal);
+
 })
 
-$('#countryUk').click(function() {
-    map.flyto([51.509865, -0.118092], 8)
-})
+
+
+
+
+// Open this back up later, making too many API Calls at the minute !!!! 
+
+// $('#countryCurrencyData').on('click', function () {
+//     $.ajax({
+//         url: "./libs/php/currencyInfo.php",
+//         type: 'POST',
+//         dataType: 'json',
+        
+
+//         success: function(result) {
+
+//             console.log(JSON.stringify(result));
+
+//             if (result.status.name == 'ok') {               
+                
+                
+//                var dropdownList = Object.keys(result.data.rates);
+               
+               
+//                const dropdownOptions1 = document.getElementById('currency1');
+//                const dropdownOptions2 = document.getElementById('currency2');
+
+//                for (let i = 0; i < dropdownList.length; i++) {
+//                 const option = document.createElement('option');
+//                 option.value = dropdownList[i];
+//                 option.text = dropdownList[i];
+//                 dropdownOptions1.appendChild(option);
+//                }
+
+//                for (let i = 0; i < dropdownList.length; i++) {
+//                 const option = document.createElement('option');
+//                 option.value = dropdownList[i];
+//                 option.text = dropdownList[i];
+//                 dropdownOptions2.appendChild(option);  
+//                }
+//             //    let e = document.getElementById('currency1');
+//             //    let value = e.value
+//             //    console.log(value);
+//             //    $('#currencyName1').html(result['data']['rates'][value]); //Works
+                          
+//             }
+
+//         },
+//         error: function(jqXHR, textStatus, errorThrown) {
+            
+//             console.log(jqXHR);
+//         }
+
+//     })
+// });
+
+// $('#convertButton').on('click', function () {
+//     $.ajax({
+//         url: "./libs/php/currencyInfo.php",
+//         type: 'POST',
+//         dataType: 'json',
+        
+
+//         success: function(result) {
+
+//             // console.log(JSON.stringify(result));
+
+//             if (result.status.name == 'ok') {               
+                
+//                let e1 = document.getElementById('currency1');
+//                let value1 = e1.value
+//                console.log(value1);
+//                $('#currencyName1').html(result['data']['rates'][value1]); 
+
+//                let e2 = document.getElementById('currency2');
+//                let value2 = e2.value
+//                console.log(value2);
+//                $('#currencyName2').html(result['data']['rates'][value2]);
+                   // **** This just needs to be the value * the currency rate        
+//             }
+
+//         },
+//         error: function(jqXHR, textStatus, errorThrown) {
+            
+//             console.log(jqXHR);
+//         }
+
+//     })
+// });

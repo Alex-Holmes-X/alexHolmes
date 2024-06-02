@@ -1,46 +1,76 @@
 
 
-
 // var map = L.map('map').setView([51.509865, -0.118092], 13); // This needs input, the below finds your location.
 
-var map = L.map('map', {
-    doubleClickZoom: false,
-}).locate({
-    setView: true, 
-    maxZoom: 13,
+// var map = L.map('map', {
+//     doubleClickZoom: false,
+// }).locate({
+//     setView: true, 
+//     maxZoom: 13,
+// });
+
+var map = L.map('map').fitWorld();
+
+map.locate({
+  setView: true, 
+  maxZoom: 15,
 });
 
 
+function onLocationFound(e) {
+  var radius = e.accuracy;
 
-// Everything below here is test data - Everything above is running the map
+  L.marker(e.latlng).addTo(map)
+      .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-var infoBtn = L.easyButton("fa-info", function (btn, map) {
-    $("#mapModal").modal("show");
+  L.circle(e.latlng, radius).addTo(map);
+}
+
+map.on('locationfound', onLocationFound);
+
+
+//Leaflet map modal buttons
+
+var infoBtnWeather = L.easyButton("fa fa-sun-o", function (btn, map) {
+    $("#mapModalWeather").modal("show");
   });
 
-infoBtn.addTo(map);
+infoBtnWeather.addTo(map);
 
-var infoBtnAirport = L.easyButton("fa-plane", function (btn, map) {
-    $("#countryAirports").modal("show");
+var infoBtnCurrentLocation = L.easyButton("fa fa-user", function (btn, map) {
+    $("#countryCurrentLocation").modal("show");
   });
 
-infoBtnAirport.addTo(map);
+infoBtnCurrentLocation.addTo(map);
 
-var infoBtnFootball = L.easyButton("fa-futbol-o", function (btn, map) {
-    $("#countryFootball").modal("show");
-  });
 
-infoBtnFootball.addTo(map);
+var countryData = L.easyButton("fa fa-globe", function (btn, map) {
+  $('#countryInformation').modal('show');
+});
+
+countryData.addTo(map);
+
+var countryFlagInfo = L.easyButton("fa fa-flag", function (btn, map) {
+  $('#countryInfoModal').modal('show');
+});
+
+countryFlagInfo.addTo(map);
+
+var countryCurrencyData = L.easyButton("fa fa-money", function (btn, map) {
+  $('#countryCurrencyData').modal('show');
+});
+
+countryCurrencyData.addTo(map);
 
 
 // Tiles
 
-var leedsUnited = L.marker([53.777782, -1.573049]).bindPopup('Leeds United FC');
-var liversedgeFc = L.marker([53.717252131, -1.70706217173]).bindPopup('Liversedge FC');
+// var leedsUnited = L.marker([53.777782, -1.573049]).bindPopup('Leeds United FC');
+// var liversedgeFc = L.marker([53.717252131, -1.70706217173]).bindPopup('Liversedge FC');
 
 // Tile Groups
 
-var stadiums = L.layerGroup([leedsUnited, liversedgeFc]);
+// var stadiums = L.layerGroup([leedsUnited, liversedgeFc]);
 
 
 // Map Layers
@@ -70,59 +100,11 @@ var baseLayers = {
     
 };
 
-var overlays = {
-    "Grounds": stadiums
-};
+// var overlays = {
+//     "Grounds": stadiums
+// };
 
-L.control.layers(baseLayers, overlays).addTo(map);
-
-
-
-
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-    }
-}
-
-var someFeatures = [{
-    "type": "Feature",
-    "properties": {
-        "name": "Coors Field",
-        "show_on_map": true
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [-104.99404, 39.75621]
-    }
-}, {
-    "type": "Feature",
-    "properties": {
-        "name": "Busch Field",
-        "show_on_map": true
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [-103.98404, 38.74621]
-    }
-}];
+L.control.layers(baseLayers).addTo(map);
 
 
 
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-    }
-}
-
-L.geoJSON(geojsonFeature, {
-    onEachFeature: onEachFeature
-}).addTo(map);
-
-L.geoJSON(someFeatures, {
-    filter: function(feature, layer) {
-        return feature.properties.show_on_map;
-    }
-}).addTo(map);
