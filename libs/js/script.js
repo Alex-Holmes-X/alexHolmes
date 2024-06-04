@@ -178,6 +178,54 @@ $(document).ready(function() {
 
     })
 
+    $.ajax({
+        url: "./libs/php/geoJSONData.php",
+        type: 'POST',
+        dataType: 'json',
+        
+        success: function(result) {
+
+            console.log(JSON.stringify(result));
+
+            if (result.status.name == 'ok') {
+
+                var countrySelect = Object.values([0])
+                console.log(countrySelect);
+
+                var countrySelectList = []
+                for (let x = 0; x < countrySelect.length; i++) {
+                    countrySelectList.push(countrySelect[x].properties.name)
+                    console.log(countrySelectList);
+                }
+                            
+                
+                
+                console.log(countrySelect);
+                
+               
+            //    const dropdownOptions = document.getElementById('countrySelect');
+               
+
+            //    for (let i = 0; i < countrySelect.length; i++) {
+            //     const option = document.createElement('option');
+            //     option.value = countrySelect[i];
+            //     option.text = countrySelect[i];
+            //     dropdownOptions.appendChild(option);
+            //     console.log(option.value);
+            //    }
+
+            console.log(result.data.properties)
+                
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            
+            console.log(jqXHR);
+        }
+
+    })
+
 });
 
 $('#countrySelect').on('change', function() {
@@ -275,6 +323,39 @@ $('#countrySelect').on('change', function() {
 
 });
 
+
+$('#countryBorders').on('click', () => {
+
+    $.ajax({
+        url: "./libs/php/geoJSONData.php",
+        type: 'POST',
+        dataType: 'json',
+        
+        success: function(result) {
+
+            console.log(JSON.stringify(result));
+
+            if (result.status.name == 'ok') {
+                    
+                var mapData = result.data;
+                L.geoJSON(mapData).addTo(map)
+                
+                
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            
+            console.log(jqXHR);
+        }
+
+    })
+
+
+});
+
+
+
 // This is just to make sure i can do the maths on the inputted values
 
 $('#convertButton').on('click', function() {
@@ -311,34 +392,34 @@ $('#convertButton').on('click', function() {
 
 //             console.log(JSON.stringify(result));
 
-//             if (result.status.name == 'ok') {               
+            // if (result.status.name == 'ok') {               
                 
                 
-//                var dropdownList = Object.keys(result.data.rates);
+            //    var dropdownList = Object.keys(result.data.rates);
                
                
-//                const dropdownOptions1 = document.getElementById('currency1');
-//                const dropdownOptions2 = document.getElementById('currency2');
+            //    const dropdownOptions1 = document.getElementById('currency1');
+            //    const dropdownOptions2 = document.getElementById('currency2');
 
-//                for (let i = 0; i < dropdownList.length; i++) {
-//                 const option = document.createElement('option');
-//                 option.value = dropdownList[i];
-//                 option.text = dropdownList[i];
-//                 dropdownOptions1.appendChild(option);
-//                }
+            //    for (let i = 0; i < dropdownList.length; i++) {
+            //     const option = document.createElement('option');
+            //     option.value = dropdownList[i];
+            //     option.text = dropdownList[i];
+            //     dropdownOptions1.appendChild(option);
+            //    }
 
-//                for (let i = 0; i < dropdownList.length; i++) {
-//                 const option = document.createElement('option');
-//                 option.value = dropdownList[i];
-//                 option.text = dropdownList[i];
-//                 dropdownOptions2.appendChild(option);  
-//                }
-//             //    let e = document.getElementById('currency1');
-//             //    let value = e.value
-//             //    console.log(value);
-//             //    $('#currencyName1').html(result['data']['rates'][value]); //Works
+            //    for (let i = 0; i < dropdownList.length; i++) {
+            //     const option = document.createElement('option');
+            //     option.value = dropdownList[i];
+            //     option.text = dropdownList[i];
+            //     dropdownOptions2.appendChild(option);  
+            //    }
+            // //    let e = document.getElementById('currency1');
+            // //    let value = e.value
+            // //    console.log(value);
+            // //    $('#currencyName1').html(result['data']['rates'][value]); //Works
                           
-//             }
+            // }
 
 //         },
 //         error: function(jqXHR, textStatus, errorThrown) {
