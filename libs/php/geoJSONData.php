@@ -6,7 +6,7 @@
     $executionStartTime = microtime(true);
 
     // Url for location data
-    $url = './libs/json/countryBorders.geo.json';
+    $url = 'https://alexjholmes.co.uk/countryBorders';
 
     
     $ch = curl_init();
@@ -24,7 +24,7 @@
     $output['status']['name'] = "ok";
     $output['status']['description'] = "success";
     $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-    $output['data'] = $decode;
+    $output['data'] = $decode['features'];
     $output['url'] = $url;
 
     header('Content-Type: application/json; charset=UTF-8');

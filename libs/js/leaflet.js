@@ -1,4 +1,4 @@
-
+// import {mapData} from './script';
 
 // var map = L.map('map').setView([51.509865, -0.118092], 13); // This needs input, the below finds your location.
 
@@ -65,12 +65,12 @@ countryCurrencyData.addTo(map);
 
 // Tiles
 
-// var leedsUnited = L.marker([53.777782, -1.573049]).bindPopup('Leeds United FC');
-// var liversedgeFc = L.marker([53.717252131, -1.70706217173]).bindPopup('Liversedge FC');
+var leedsUnited = L.marker([53.777782, -1.573049]).bindPopup('Leeds United FC');
+var liversedgeFc = L.marker([53.717252131, -1.70706217173]).bindPopup('Liversedge FC');
 
 // Tile Groups
 
-// var stadiums = L.layerGroup([leedsUnited, liversedgeFc]);
+var stadiums = L.layerGroup([leedsUnited, liversedgeFc]);
 
 
 // Map Layers
@@ -100,11 +100,11 @@ var baseLayers = {
     
 };
 
-// var overlays = {
-//     "Grounds": stadiums
-// };
+var overlays = {
+    "Grounds": stadiums
+};
 
-L.control.layers(baseLayers).addTo(map);
+L.control.layers(baseLayers, overlays).addTo(map);
 
 
 

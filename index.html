@@ -47,13 +47,7 @@
           <div id="country-search" class="col-12">
             <span id="selectContainer"> 
               <select id="countrySelect" class="form-select shadow-lg">
-                <!-- populate from an AJAX CALL to a PHP routine that returns a JSON object that is an array of just ISO codes and names from countryBorders.geo.json -->
-                <option value="gbr">Great Britan</option>
-                <option value="usa">USA</option>
-                <option value="aus">Australia</option>
-                <option value="chn">China</option>
-                <option value="rus">Russia</option>
-                <option value="ind">India</option>
+             
               </select>
               
             </span>
@@ -195,6 +189,9 @@
                                   <td>Surface Area km2</td>
                                   <td id="countrySurfaceArea"></td>
                                 </tr>
+                                <tr>
+                                  <td><button id="countryBorders">Show Borders</button></td>
+                                </tr>
                             </table>
                             </div>
                         <div class="modal-footer">
@@ -298,5 +295,6 @@
         <script type="application/javascript" src="./libs/js/leaflet.js"></script>
         <script type="application/javascript" src="./libs/js/script.js"></script>
         <script src="./libs/json/countryBorders.geo.json"></script>
+        
       </body>
 </html>
