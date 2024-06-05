@@ -86,9 +86,9 @@ $(document).ready(function() {
                                 const sunsetDate = new Date(sunsetTimestamp);
 
                                 var sunrise = sunriseDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-                                console.log(sunrise);
+                                
                                 var sunset = sunsetDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-                                console.log(sunset)
+                               
 
                                 $('#weatherIcon').attr('src', iconUrl);                        
 
@@ -188,34 +188,15 @@ $(document).ready(function() {
             console.log(JSON.stringify(result));
 
             if (result.status.name == 'ok') {
-
-                var countrySelect = Object.values([0])
-                console.log(countrySelect);
-
-                var countrySelectList = []
-                for (let x = 0; x < countrySelect.length; i++) {
-                    countrySelectList.push(countrySelect[x].properties.name)
-                    console.log(countrySelectList);
+                // Because the json data has already been parsed to an array of just the country names
+                // this is the only data that it will summarise so you are just looping through 
+                // array 
+                                
+                for(const country of result.data) {
+                    $('#countrySelect').append(`<option value="${country.iso_a2}">${country.name}</option>`);
                 }
-                            
-                
-                
-                console.log(countrySelect);
-                
-               
-            //    const dropdownOptions = document.getElementById('countrySelect');
-               
 
-            //    for (let i = 0; i < countrySelect.length; i++) {
-            //     const option = document.createElement('option');
-            //     option.value = countrySelect[i];
-            //     option.text = countrySelect[i];
-            //     dropdownOptions.appendChild(option);
-            //     console.log(option.value);
-            //    }
-
-            console.log(result.data.properties)
-                
+            
             }
 
         },
@@ -226,26 +207,60 @@ $(document).ready(function() {
 
     })
 
+    $.ajax({
+                url: "./libs/php/currencyInfo.php",
+                type: 'POST',
+                dataType: 'json',
+                
+        
+                success: function(result) {
+        
+                    console.log(JSON.stringify(result));
+        
+                    if (result.status.name == 'ok') {               
+                        
+                        
+                       var dropdownList = Object.keys(result.data.rates);
+                       
+                       
+                       const dropdownOptions1 = document.getElementById('currency1');
+                       const dropdownOptions2 = document.getElementById('currency2');
+        
+                       for (let i = 0; i < dropdownList.length; i++) {
+                        const option = document.createElement('option');
+                        option.value = dropdownList[i];
+                        option.text = dropdownList[i];
+                        dropdownOptions1.appendChild(option);
+                       }
+        
+                       for (let i = 0; i < dropdownList.length; i++) {
+                        const option = document.createElement('option');
+                        option.value = dropdownList[i];
+                        option.text = dropdownList[i];
+                        dropdownOptions2.appendChild(option);  
+                       }
+                    //    let e = document.getElementById('currency1');
+                    //    let value = e.value
+                    //    console.log(value);
+                    //    $('#currencyName1').html(result['data']['rates'][value]); //Works
+                                  
+                    }
+        
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    
+                    console.log(jqXHR);
+                }
+        
+            })
+
+    
+
 });
 
 $('#countrySelect').on('change', function() {
-
-    if (document.getElementById('countrySelect').value === 'gbr') {
-        map.flyTo([51.509865, -0.118092], 8)
-    } else if (document.getElementById('countrySelect').value === 'usa') {
-        map.flyTo([38.907192, -77.036873], 8)
-    } else if (document.getElementById('countrySelect').value === 'aus') {
-        map.flyTo([-35.282001, 149.128998], 8)
-    } else if (document.getElementById('countrySelect').value === 'chn') {
-        map.flyTo([39.916668, 116.383331], 8)
-    } else if (document.getElementById('countrySelect').value === 'rus') {
-        map.flyTo([55.751244, 37.618423], 8)
-    } else if (document.getElementById('countrySelect').value === 'ind') {
-        map.flyTo([28.644800, 77.216721], 8)
-    };
-
-
-
+   
+    
 
 
     $.ajax({
@@ -319,15 +334,8 @@ $('#countrySelect').on('change', function() {
 
     })
 
-
-
-});
-
-
-$('#countryBorders').on('click', () => {
-
     $.ajax({
-        url: "./libs/php/geoJSONData.php",
+        url: "./libs/php/geoJSONCountryBorders.php",
         type: 'POST',
         dataType: 'json',
         
@@ -336,12 +344,35 @@ $('#countryBorders').on('click', () => {
             console.log(JSON.stringify(result));
 
             if (result.status.name == 'ok') {
+
+                const currentValue = document.getElementById('countrySelect').value; 
+                 // gets the current value of the select dropdown box             
+
+                for (const location of result.data) {
+                    if (location.properties.iso_a2 === currentValue) {
+                        var mapData = location.geometry;
+                        var latitude = location.geometry.coordinates[0][0][0][1]; 
+                        var longitude = location.geometry.coordinates[0][0][0][0];
+                        
+                        if(longitude === undefined) {
+                            var latitude1 = location.geometry.coordinates[0][0][1]; 
+                            var longitude2 = location.geometry.coordinates[0][0][0];
+                            L.geoJSON(mapData).addTo(map);
+                            map.flyTo([latitude1, longitude2], 4)
+
+                        } else {
+                            L.geoJSON(mapData).addTo(map);                        
+                            map.flyTo([latitude, longitude], 4)
+
+                        }                        
+                       
+                    }
                     
-                var mapData = result.data;
-                L.geoJSON(mapData).addTo(map)
-                
-                
+                }
+
             }
+
+            
 
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -353,6 +384,8 @@ $('#countryBorders').on('click', () => {
 
 
 });
+
+
 
 
 
@@ -375,6 +408,7 @@ $('#convertButton').on('click', function() {
 
 })
 
+    
 
 
 
@@ -430,36 +464,53 @@ $('#convertButton').on('click', function() {
 //     })
 // });
 
-// $('#convertButton').on('click', function () {
-//     $.ajax({
-//         url: "./libs/php/currencyInfo.php",
-//         type: 'POST',
-//         dataType: 'json',
+$('#getCurrencyRates').on('click', function () {
+    $.ajax({
+        url: "./libs/php/currencyInfo.php",
+        type: 'POST',
+        dataType: 'json',
         
 
-//         success: function(result) {
+        success: function(result) {
 
-//             // console.log(JSON.stringify(result));
+            // console.log(JSON.stringify(result));
 
-//             if (result.status.name == 'ok') {               
+            if (result.status.name == 'ok') {               
                 
-//                let e1 = document.getElementById('currency1');
-//                let value1 = e1.value
-//                console.log(value1);
-//                $('#currencyName1').html(result['data']['rates'][value1]); 
+               let e1 = document.getElementById('currency1');
+               let value1 = e1.value
+               console.log(value1);
+               $('#currencyName1').html(result['data']['rates'][value1]); 
 
-//                let e2 = document.getElementById('currency2');
-//                let value2 = e2.value
-//                console.log(value2);
-//                $('#currencyName2').html(result['data']['rates'][value2]);
-                   // **** This just needs to be the value * the currency rate        
-//             }
+               let e2 = document.getElementById('currency2');
+               let value2 = e2.value
+               console.log(value2);
+               $('#currencyName2').html(result['data']['rates'][value2]);
+                //    **** This just needs to be the value * the currency rate        
+            }
 
-//         },
-//         error: function(jqXHR, textStatus, errorThrown) {
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
             
-//             console.log(jqXHR);
-//         }
+            console.log(jqXHR);
+        }
 
-//     })
-// });
+    })
+});
+
+$('#convertButton').on('click', function() {
+
+    // When the api function has been sorted, take the inputted value, * it by the selected 
+    // currency and then sumaryise the total
+    
+    const convertedAmount = document.getElementById('amount').value;
+
+    const roundedTotal = Math.round(convertedAmount * 100) / 100;
+
+    const conversionRate = document.getElementById('currencyName2').value;
+
+    const convertedTotal = roundedTotal * Number(conversionRate);
+
+    $('#convertedTotal').html(convertedTotal);
+
+});
