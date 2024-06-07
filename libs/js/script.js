@@ -2,12 +2,14 @@ $(document).ready(function() {
 
     // This finds the current location and passes the data to the HTML document
 
+
     navigator.geolocation.getCurrentPosition(showNewPosition);
 
     function showNewPosition(position) {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-
+        console.log(latitude);
+        console.log(longitude);
 
         // This populates the data in the current location section in the HTML document.
 
@@ -19,22 +21,162 @@ $(document).ready(function() {
                 latitude: latitude,
                 longitude: longitude
                 
+                
             },
             success: function(result) {
     
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
     
                 if (result.status.name == 'ok') {
                         
                     $('#current-country').html(result['data']['results'][0]['components']['country']);
                     $('#current-county').html(result['data']['results'][0]['components']['state_district']);
-                    $('#current-village').html(result['data']['results'][0]['components']['village']);
-                    $('#current-neighbourhood').html(result['data']['results'][0]['components']['neighbourhood']); 
                     $('#current-city').html(result['data']['results'][0]['components']['city']); 
                     
-                //    Make a function to hide neighbourhood if blank
-                    
+                    var countryValue= (result['data']['results'][0]['components']['ISO_3166-1_alpha-2'])
+                    $('#countrySelect').append(`<option value="${countryValue}">My Location</option>`);
+
                 }
+
+                $.ajax({
+                    url: "./libs/php/geoJSONData.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    
+                    success: function(result) {
+            
+                        // console.log(JSON.stringify(result));
+            
+                        if (result.status.name == 'ok') {
+                            // Because the json data has already been parsed to an array of just the country names
+                            // this is the only data that it will summarise so you are just looping through 
+                            // array 
+                                            
+                            for(const country of result.data) {
+                                // TODO add in the users country first then all the other countries
+                                $('#countrySelect').append(`<option value="${country.iso_a2}">${country.name}</option>`);
+                            }
+            
+                        
+                        }
+            
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        
+                        console.log(jqXHR);
+                    }
+            
+                })
+
+                $.ajax({
+                    url: "./libs/php/countryStatistics.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                        countryCode: countryValue,
+            
+                    },
+                    success: function(result) {
+            
+                        // console.log(JSON.stringify(result));
+            
+                        if (result.status.name == 'ok') {
+                            
+                            
+                            $('#countryPopulation').html(result['data'][0]['population']);
+                            $('#countryUnemployment').html(result['data'][0]['unemployment']);
+                            $('#countryHomicideRate').html(result['data'][0]['homicide_rate']);
+                            $('#countryCurrency').html(result['data'][0]['currency']['name']);
+                            $('#countryMaleLifeExpectancy').html(result['data'][0]['life_expectancy_male']);
+                            $('#countryFemaleLifeExpectancy').html(result['data'][0]['life_expectancy_female']);
+                            $('#countryCapital').html(result['data'][0]['capital']);
+                            $('#countryCo2Emissions').html(result['data'][0]['co2_emissions']);
+                            $('#countrySurfaceArea').html(result['data'][0]['surface_area']);
+                            $('#countryFertility').html(result['data'][0]['fertility']);
+                            $('#countryForrestedArea').html(result['data'][0]['forested_area']);
+                            $('#countryTourists').html(result['data'][0]['tourists']);
+                            $('#countrySpecies').html(result['data'][0]['threatened_species']);
+                            $('#countryRefugees').html(result['data'][0]['refugees']);
+                            
+                            $('#currency1').html(result['data'][0]['currency']['code']);
+                            
+                         
+                            
+                        }
+            
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        
+                        console.log(jqXHR);
+                    }
+            
+                })
+
+                $.ajax({
+                    url: "./libs/php/countryInformation.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                        countryCode: countryValue
+            
+                    },
+                    success: function(result) {
+            
+                        // console.log(JSON.stringify(result));
+            
+                        if (result.status.name == 'ok') {
+                                
+                            $('#flag-icon').html(result['data'][0]['flag']);
+            
+                            
+                            // Icon images
+                            var flag = (result['data'][0]['flags']['svg']);                
+                            $('#main-country-flag').attr('src', flag);
+                    
+                            var coa = (result['data'][0]['coatOfArms']['svg']);                
+                            $('#coat-of-arms').attr('src', coa);
+                            
+                            
+                        }
+            
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        
+                        console.log(jqXHR);
+                    }
+            
+            })
+
+            $.ajax({
+                url: "./libs/php/pointsOfInterest.php", //Points of interest !!!!
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    latitude: latitude,
+                    longitude: longitude
+                },
+                
+                success: function(result) {
+        
+                    // console.log(JSON.stringify(result));
+        
+                    if (result) {
+                        
+                        const pointsOfInterest = result['results'][0]['geocodes'];
+                        console.log(pointsOfInterest);
+        
+                    
+                    }
+        
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    
+                    console.log(jqXHR);
+                }
+        
+            })
+
+                
     
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -42,7 +184,7 @@ $(document).ready(function() {
                 console.log(jqXHR);
             }
 
-        });
+        })
 
                     // This is the weather API call
 
@@ -57,12 +199,12 @@ $(document).ready(function() {
                             latitude: latitude,
                             longitude: longitude,
                             apiKey: apiKey,
-                            exclusions: 'minutely,hourly,daily'
+                            exclusions: 'minutely,hourly'
                 
                         },
                         success: function(result) {
                 
-                            console.log(JSON.stringify(result));
+                            // console.log(JSON.stringify(result));
                 
                             if (result.status.name == 'ok') {
                                 // put new date conversion for seconds here
@@ -71,7 +213,15 @@ $(document).ready(function() {
                                 $('#feels-like').html(result['data']['current']['feels_like']);
                                 $('#humidity').html(result['data']['current']['humidity']);
                                 $('#wind-speed').html(result['data']['current']['wind_speed']);
-                                $('#time-zone').html(result['data']['timezone']);
+                                $('#time-zone').html(result['data']['timezone']);                               
+                                $('#weatherOverview').html(result['data']['daily'][0]['summary'])
+                                $('#dailyAverage').html(result['data']['daily'][0]['temp']['day']);
+                                $('#dailyLow').html(result['data']['daily'][0]['temp']['min']);
+                                $('#dailyMax').html(result['data']['daily'][0]['temp']['max']);
+                                $('#dailyNight').html(result['data']['daily'][0]['temp']['night']);
+                                
+                                
+
                                 
                                 
                                 // This is used to create the weather icon
@@ -96,6 +246,7 @@ $(document).ready(function() {
                                 $('#sunset').html(sunset);
                                 
 
+                                
                             }
                 
                         },
@@ -118,7 +269,7 @@ $(document).ready(function() {
             },
             success: function(result) {
     
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
     
                 if (result.status.name == 'ok') {
                         
@@ -143,116 +294,76 @@ $(document).ready(function() {
     
     })
 
-    $.ajax({
-        url: "./libs/php/countryStatistics.php",
-        type: 'POST',
-        dataType: 'json',
-        data: { 
-            countryCode: $('#countrySelect').val()
 
-        },
-        success: function(result) {
 
-            console.log(JSON.stringify(result));
+    
 
-            if (result.status.name == 'ok') {
-                    
-                $('#countryPopulation').html(result['data'][0]['population']);
-                $('#countryUnemployment').html(result['data'][0]['unemployment']);
-                $('#countryHomicideRate').html(result['data'][0]['homicide_rate']);
-                $('#countryCurrency').html(result['data'][0]['currency']['name']);
-                $('#countryMaleLifeExpectancy').html(result['data'][0]['life_expectancy_male']);
-                $('#countryFemaleLifeExpectancy').html(result['data'][0]['life_expectancy_female']);
-                $('#countryCapital').html(result['data'][0]['capital']);
-                $('#countryCo2Emissions').html(result['data'][0]['co2_emissions']);
-                $('#countrySurfaceArea').html(result['data'][0]['surface_area']);
-                
-                
-            }
-
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            
-            console.log(jqXHR);
-        }
-
-    })
-
-    $.ajax({
-        url: "./libs/php/geoJSONData.php",
-        type: 'POST',
-        dataType: 'json',
+    // $.ajax({
+    //     url: "./libs/php/geoJSONData.php",
+    //     type: 'POST',
+    //     dataType: 'json',
         
-        success: function(result) {
+    //     success: function(result) {
 
-            console.log(JSON.stringify(result));
+    //         console.log(JSON.stringify(result));
 
-            if (result.status.name == 'ok') {
-                // Because the json data has already been parsed to an array of just the country names
-                // this is the only data that it will summarise so you are just looping through 
-                // array 
+    //         if (result.status.name == 'ok') {
+    //             // Because the json data has already been parsed to an array of just the country names
+    //             // this is the only data that it will summarise so you are just looping through 
+    //             // array 
                                 
-                for(const country of result.data) {
-                    $('#countrySelect').append(`<option value="${country.iso_a2}">${country.name}</option>`);
-                }
+    //             for(const country of result.data) {
+    //                 // TODO add in the users country first then all the other countries
+    //                 $('#countrySelect').append(`<option value="${country.iso_a2}">${country.name}</option>`);
+    //             }
 
             
-            }
+    //         }
 
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
+    //     },
+    //     error: function(jqXHR, textStatus, errorThrown) {
             
-            console.log(jqXHR);
-        }
+    //         console.log(jqXHR);
+    //     }
 
-    })
-
-    $.ajax({
-                url: "./libs/php/currencyInfo.php",
-                type: 'POST',
-                dataType: 'json',
+    // })
+    //TODO Turn this back on, using too many calls to website, will run out of API calls
+    // $.ajax({
+    //             url: "./libs/php/currencyInfo.php",
+    //             type: 'POST',
+    //             dataType: 'json',
                 
         
-                success: function(result) {
+    //             success: function(result) {
         
-                    console.log(JSON.stringify(result));
+    //                 console.log(JSON.stringify(result));
         
-                    if (result.status.name == 'ok') {               
+    //                 if (result.status.name == 'ok') {               
                         
                         
-                       var dropdownList = Object.keys(result.data.rates);
+    //                    var dropdownList = Object.keys(result.data.rates);
                        
                        
-                       const dropdownOptions1 = document.getElementById('currency1');
-                       const dropdownOptions2 = document.getElementById('currency2');
+                   
+    //                    const dropdownOptions2 = document.getElementById('currency2');
+             
         
-                       for (let i = 0; i < dropdownList.length; i++) {
-                        const option = document.createElement('option');
-                        option.value = dropdownList[i];
-                        option.text = dropdownList[i];
-                        dropdownOptions1.appendChild(option);
-                       }
-        
-                       for (let i = 0; i < dropdownList.length; i++) {
-                        const option = document.createElement('option');
-                        option.value = dropdownList[i];
-                        option.text = dropdownList[i];
-                        dropdownOptions2.appendChild(option);  
-                       }
-                    //    let e = document.getElementById('currency1');
-                    //    let value = e.value
-                    //    console.log(value);
-                    //    $('#currencyName1').html(result['data']['rates'][value]); //Works
-                                  
-                    }
-        
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
+    //                    for (let i = 0; i < dropdownList.length; i++) {
+    //                     const option = document.createElement('option');
+    //                     option.value = dropdownList[i];
+    //                     option.text = dropdownList[i];
+    //                     dropdownOptions2.appendChild(option);  
+    //                    }
                     
-                    console.log(jqXHR);
-                }
+    //                 }
         
-            })
+    //             },
+    //             error: function(jqXHR, textStatus, errorThrown) {
+                    
+    //                 console.log(jqXHR);
+    //             }
+        
+    //         })
 
     
 
@@ -263,40 +374,7 @@ $('#countrySelect').on('change', function() {
     
 
 
-    $.ajax({
-        url: "./libs/php/countryInformation.php",
-        type: 'POST',
-        dataType: 'json',
-        data: { 
-            countryCode: $('#countrySelect').val()
-
-        },
-        success: function(result) {
-
-            console.log(JSON.stringify(result));
-
-            if (result.status.name == 'ok') {
-                    
-                $('#flag-icon').html(result['data'][0]['flag']);
-
-                
-                // Icon images
-                var flag = (result['data'][0]['flags']['svg']);                
-                $('#main-country-flag').attr('src', flag);
-        
-                var coa = (result['data'][0]['coatOfArms']['svg']);                
-                $('#coat-of-arms').attr('src', coa);
-                
-                
-            }
-
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            
-            console.log(jqXHR);
-        }
-
-})
+    
     
 
     $.ajax({
@@ -319,9 +397,14 @@ $('#countrySelect').on('change', function() {
                 $('#countryCurrency').html(result['data'][0]['currency']['name']);
                 $('#countryMaleLifeExpectancy').html(result['data'][0]['life_expectancy_male']);
                 $('#countryFemaleLifeExpectancy').html(result['data'][0]['life_expectancy_female']);
+                // TODO Add these here and make sure to add above on document ready!
+                // Fertility 
                 $('#countryCapital').html(result['data'][0]['capital']);
+                // Tourist Info
                 $('#countryCo2Emissions').html(result['data'][0]['co2_emissions']);
                 $('#countrySurfaceArea').html(result['data'][0]['surface_area']);
+                //Foreested area
+                // Threatened Specicies
                 
                 
             }
@@ -400,7 +483,7 @@ $('#convertButton').on('click', function() {
 
     const roundedTotal = Math.round(convertedAmount * 100) / 100;
 
-    const conversionRate = 0.852362;
+    const conversionRate = document.getElementById('currencyName1').value; // add in api response
 
     const convertedTotal = roundedTotal * conversionRate;
 
@@ -408,61 +491,6 @@ $('#convertButton').on('click', function() {
 
 })
 
-    
-
-
-
-
-// Open this back up later, making too many API Calls at the minute !!!! 
-
-// $('#countryCurrencyData').on('click', function () {
-//     $.ajax({
-//         url: "./libs/php/currencyInfo.php",
-//         type: 'POST',
-//         dataType: 'json',
-        
-
-//         success: function(result) {
-
-//             console.log(JSON.stringify(result));
-
-            // if (result.status.name == 'ok') {               
-                
-                
-            //    var dropdownList = Object.keys(result.data.rates);
-               
-               
-            //    const dropdownOptions1 = document.getElementById('currency1');
-            //    const dropdownOptions2 = document.getElementById('currency2');
-
-            //    for (let i = 0; i < dropdownList.length; i++) {
-            //     const option = document.createElement('option');
-            //     option.value = dropdownList[i];
-            //     option.text = dropdownList[i];
-            //     dropdownOptions1.appendChild(option);
-            //    }
-
-            //    for (let i = 0; i < dropdownList.length; i++) {
-            //     const option = document.createElement('option');
-            //     option.value = dropdownList[i];
-            //     option.text = dropdownList[i];
-            //     dropdownOptions2.appendChild(option);  
-            //    }
-            // //    let e = document.getElementById('currency1');
-            // //    let value = e.value
-            // //    console.log(value);
-            // //    $('#currencyName1').html(result['data']['rates'][value]); //Works
-                          
-            // }
-
-//         },
-//         error: function(jqXHR, textStatus, errorThrown) {
-            
-//             console.log(jqXHR);
-//         }
-
-//     })
-// });
 
 $('#getCurrencyRates').on('click', function () {
     $.ajax({
@@ -498,19 +526,21 @@ $('#getCurrencyRates').on('click', function () {
     })
 });
 
-$('#convertButton').on('click', function() {
+// TODO Turn this back on when ready to make calls to currency site
 
-    // When the api function has been sorted, take the inputted value, * it by the selected 
-    // currency and then sumaryise the total
+// $('#convertButton').on('click', function() {
+
+//     // When the api function has been sorted, take the inputted value, * it by the selected 
+//     // currency and then sumaryise the total
     
-    const convertedAmount = document.getElementById('amount').value;
+//     const convertedAmount = document.getElementById('amount').value;
+//     console.log(convertedAmount);
+//     const roundedTotal = Math.round(convertedAmount * 100) / 100;
+//     console.log(roundedTotal);
+//     const conversionRate = document.getElementById('currencyName2').innerHTML;
+//     console.log(conversionRate);
+//     const convertedTotal = convertedAmount * conversionRate;
+//     console.log(convertedTotal);
+//     $('#convertedTotal').html(convertedTotal);
 
-    const roundedTotal = Math.round(convertedAmount * 100) / 100;
-
-    const conversionRate = document.getElementById('currencyName2').value;
-
-    const convertedTotal = roundedTotal * Number(conversionRate);
-
-    $('#convertedTotal').html(convertedTotal);
-
-});
+// });

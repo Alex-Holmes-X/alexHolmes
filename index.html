@@ -63,46 +63,72 @@
             <div id="mapModalWeather" class="modal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Weather Information</h5>
+                    <div class="modal-header bg-warning">
+                      <h5 class="modal-title">Weather Information <span><img src="./libs/styling/images/weather-svgrepo-com.svg" height="70px" width="80px" alt=""></span></h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                      <table>
-                        <tr>
-                          <td>Current Weather</td>
-                          <td><img id='weatherIcon' src=""></td>                          
-                        </tr>
-                        <tr>
-                          <td>Temperature</td>
-                          <td><p><span id="current-temperature"></span> ℃</p></td>
-                        </tr>
-                        <tr>
-                          <td>Humidity</td>
-                          <td><span id="humidity"></span> %</p></td>
-                        </tr>
-                        <tr>
-                          <td>Wind Speed</td>
-                          <td><span id="wind-speed"></span> m/s</p></td>
-                        </tr>
-                        <tr>
-                          <td>Timezone</td>
-                          <td><span id="time-zone"></span></td>
-                        </tr>
-                        <tr>
-                          <td>The sun will rise on</td>
-                          <td><span id="sunrise" value=""></span>am</td>
-                        </tr>
-                        
-                        <tr>
-                          <td>The sun will set on</td>
-                          <td><p id="sunset" value=""></p>pm</td>
-                        </tr>
-                        
-                    </table>
+                    <div class="modal-body bg-warning-subtle">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <table class="table table-striped">
+                            <tr>
+                              <td class="col-md-1 text-end table-warning">Current Weather</td>
+                              <td class="col-md-4 text-center table-warning"><img id='weatherIcon' src=""></td>                          
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end">Current Temperature</td>
+                              <td class="col-md-4 text-center"><p><span id="current-temperature"></span> ℃</p></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end table-warning">Current Humidity</td>
+                              <td class="col-md-4 text-center table-warning"><p><span id="humidity"></span> %</p></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end">Current Wind Speed</td>
+                              <td class="col-md-4 text-center"><p><span id="wind-speed"></span> mps</p></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end table-warning">Timezone</td>
+                              <td class="col-md-4 text-center table-warning"><span id="time-zone"></span></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end">The sun will rise on</td>
+                              <td class="col-md-4 text-center"><span id="sunrise" value=""></span> am</td>
+                            </tr>                        
+                            <tr>
+                              <td class="col-md-1 text-end table-warning">The sun will set on</td>
+                              <td class="col-md-4 text-center table-warning"><span id="sunset" value=""></span> pm</td>
+                            </tr>
+                            <!-- ////////////////////////////// -->
+                            <tr>
+                              <td class="col-md-1 text-end">Overview</td>
+                              <td class="col-md-4 text-center"><p id="weatherOverview" value="">span</p></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end table-warning">Daily High Temperature</td>
+                              <td class="col-md-4 text-center table-warning"><p><span id="dailyAverage" value=""></span>℃</p></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end">Daily Low Temperature</td>
+                              <td class="col-md-4 text-center"><p><span id="dailyLow" value=""></span>℃</p></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end table-warning">Daily Maximum Temperature</td>
+                              <td class="col-md-4 text-center table-warning"><p><span id="dailyMax" value=""></span>℃</p></td>
+                            </tr>
+                            <tr>
+                              <td class="col-md-1 text-end">Night Time Temperature</td>
+                              <td class="col-md-4 text-center"><p><span id="dailyNight" value=""></span>℃</p></td>
+                            </tr>
+                            
+                        </table>
+
                         </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                      
+                        </div>
+                    <div class="modal-footer bg-warning-subtle">
+                      <button type="button" class="btn btn-warning-subtle" data-bs-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
@@ -112,32 +138,34 @@
               <div id="countryCurrentLocation" class="modal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Current Location Information</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <div class="modal-header bg-info">
+                        <h5 class="modal-title">Current Location Information <span><img src="./libs/styling/images/location-pin-svgrepo-com.svg" height="60px" width="50px" alt=""></span></h5>
+                        <button type="button" class="btn-close bg-info" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
-                          <table>
+                      <div class="modal-body bg-info-subtle">
+                        <div class="container-fluid">
+                          <div class="row">
+                            <table class="table table-striped">
                               <tr>
-                                <td>Current Country:</td>
-                                <td><span id="current-country"></span></td>
+                                <td class="col-md-4 text-end table-info">Current Country</td>
+                                <td class="col-md-4 text-center table-info"><span id="current-country"></span></td>
                               </tr>
                               <tr>
-                                <td>Current County:</td>
-                                <td><span id="current-county"></span></td>
+                                <td class="col-md-1 text-end">Current County </td>
+                                <td class="col-md-4 text-center"><span id="current-county"></span></td>
                               </tr>
                               <tr>
-                                <td>Current City:</td>
-                                <td><span id="current-city"></span></td>
-                              </tr>
-                              <!-- <tr>
-                                <td>Current Neighbourhood:</td>
-                                <td><span id="current-neighbourhood"></span></td>
-                              </tr> -->
+                                <td class="col-md-1 text-end table-info">Current City</td>
+                                <td class="col-md-4 text-center table-info"><span id="current-city"></span></td>
+                              </tr>                            
                           </table>
+
                           </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                          
+                          </div>
+                      <div class="modal-footer bg-info-subtle">
+                        <button type="button" class="btn btn-info-subtle" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -146,56 +174,77 @@
                 <div id="countryInformation" class="modal" tabindex="-1">
                   <div class="modal-dialog">
                       <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Country Population Data</h5>
+                        <div class="modal-header bg-danger">
+                          <h5 class="modal-title">Country Population Data <span><img src="./libs/styling/images/globe-2-svgrepo-com.svg" height="40px" width="40px" alt=""></span></h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <table>
+                        <div class="modal-body bg-danger-subtle">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <table class="table table-striped">
                                 <tr>
-                                  <td>Population (Millions): </td>
-                                  <td id="countryPopulation" class="text-sm-end text-lg-start"></td>
-                                  
+                                  <td class="col-md-4 text-end table-danger">Population (Millions)</td>
+                                  <td class="col-md-4 text-start table-danger" id="countryPopulation"></td>                                  
                                 </tr>
                                 <tr>
-                                  <td>Unemployment % :  </td>
+                                  <td class="col-md-4 text-end">Unemployment %</td>
                                   <td id="countryUnemployment"></td>
                                 </tr>
                                 <tr>
-                                  <td>Homicide Rate % </td>
-                                  <td id="countryHomicideRate"></td>
+                                  <td class="col-md-4 text-end table-danger">Homicide Rate %</td>
+                                  <td  class="table-danger"id="countryHomicideRate"></td>
                                 </tr>
                                 <tr>
-                                  <td>Currency</td>
+                                  <td class="col-md-4 text-end">Currency</td>
                                   <td id="countryCurrency"></td>
                                 </tr>
                                 <tr>
-                                  <td>Male Life Expectancy</td>
-                                  <td id="countryMaleLifeExpectancy"></td>
+                                  <td class="col-md-4 text-end table-danger">Male Life Expectancy</td>
+                                  <td class="table-danger" id="countryMaleLifeExpectancy"></td>
                                 </tr>
                                 <tr>
-                                  <td>Female Life Expectancy</td>
+                                  <td class="col-md-4 text-end">Female Life Expectancy</td>
                                   <td id="countryFemaleLifeExpectancy"></td>
                                 </tr>
                                 <tr>
-                                  <td>Capital</td>
+                                  <td class="col-md-4 text-end table-danger">Fertility %</td>
+                                  <td  class="table-danger"id="countryFertility"></td>
+                                </tr>
+                                <tr>
+                                  <td class="col-md-4 text-end">Capital</td>
                                   <td id="countryCapital"></td>
                                 </tr>
                                 <tr>
-                                  <td>Co2 Emissions</td>
+                                  <td class="col-md-4 text-end table-danger">Refugees</td>
+                                  <td class="table-danger" id="countryRefugees"></td>
+                                </tr>
+                                <tr>
+                                  <td class="col-md-4 text-end">Co2 Emissions</td>
                                   <td id="countryCo2Emissions"></td>
                                 </tr>
                                 <tr>
-                                  <td>Surface Area km2</td>
-                                  <td id="countrySurfaceArea"></td>
+                                  <td class="col-md-4 text-end table-danger">Surface Area km2</td>
+                                  <td class="table-danger" id="countrySurfaceArea"></td>
                                 </tr>
                                 <tr>
-                                  <td><button id="countryBorders">Show Borders</button></td>
+                                  <td class="col-md-4 text-end">Forrested Area %</td>
+                                  <td id="countryForrestedArea"></td>
                                 </tr>
+                                <tr>
+                                  <td class="col-md-4 text-end table-danger">Tourists Per Year</td>
+                                  <td class="table-danger" id="countryTourists"></td>
+                                </tr>
+                                <tr>
+                                  <td class="col-md-4 text-end">Threatened Species</td>
+                                  <td id="countrySpecies"></td>
+                                </tr>                              
                             </table>
                             </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                            
+                            </div>
+                        <div class="modal-footer bg-danger-subtle">
+                          <button type="button" class="btn btn-danger-subtle" data-bs-dismiss="modal">Close</button>
                         </div>
                       </div>
                     </div>
@@ -205,11 +254,11 @@
               <div id="countryInfoModal" class="modal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Country Data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <div class="modal-header bg-dark text-white">
+                        <h5 class="modal-title">Country Data <span><img src="./libs/styling/images/red-flag-svgrepo-com.svg" height="60px" width="60px"  alt=""></span></h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
+                      <div class="modal-body bg-dark-subtle">
                           <table>
                               <tr>
                                 <td>Country Flag</td>
@@ -221,8 +270,8 @@
                               </tr>
                           </table>
                           </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <div class="modal-footer bg-dark-subtle">
+                        <button type="button" class="btn btn-dark-subtle" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -235,45 +284,53 @@
                           <h5 class="modal-title">Currency Data</h5>
                           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <table>
-                              <tr>
-                                <td>Select Your Own Currency</td>
-                                <td >Select Currency to Convert</td>
-                                <td><button id="getCurrencyRates">Get Currency Rates</button></td>
-                              </tr>
+                        <div class="modal-body bg-success-subtle">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <table>
                                 <tr>
-                                  <td><select name="" id="currency1"></select></td> 
-                                  <td><select name="" id="currency2"></select></td>
-                                  
-                                </tr>                                
-                                <tr>
-                                  <td>Current Converion Rate</td>
-                                  <td>Current Conversion Rate</td>
+                                  <td class="fs-6 text text-center">Your Currency is</td>
+                                  <td class="fs-6 text text-center">Select Currency to Convert</td>
+                                  <td ><button type="button" class="btn btn-primary" id="getCurrencyRates">Get Currency Rates</button></td>
                                 </tr>
-                                <tr>
-                                  <td id="currencyName1"></td>
-                                  <td id='currencyName2'></td>
-                                </tr>
-                                <tr>
-                                  <div class="container text-center">
-                                    <div class="row">
-                                      <div>
-                                        <td>Amount to Convert</td>
-                                        <td><input id="amount" type="text" class="col-12" value=""></td>
+                                  <tr> <!-- These need styling correctly-->
+                                    <td class="text-center bg-white"><span name="" id="currency1"></span></td>  
+                                    <td class="text-center"><select name="" id="currency2"></select></td>                                    
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p></p>
+                                    </td>
+                                  </tr>                                
+                                  <tr>
+                                    <td class="fs-6 text text-center"><p>Current Converion Rate</p></td>
+                                    <td class="fs-6 text text-center"><p>Current Conversion Rate</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td><span id="currencyName1"></span></td>
+                                    <td><span id='currencyName2'></span></td>
+                                  </tr>
+                                  <tr>
+                                    <div class="container text-center">
+                                      <div class="row">
+                                        <div>
+                                          <td class="fs-6 text">Amount to Convert</td>
+                                          <td><input id="amount" type="text" class="col-12" value=""></td>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                  
-                                </tr>                                
-                                <tr>                                  
-                                  <td><button id="convertButton">Convert</button></td>
-                                  <td ><span id="convertedTotal">Converted Total</span></td>
-                                </tr>
-                            </table>
+                                    
+                                  </tr>                                
+                                  <tr>                                  
+                                    <td><button type="button" class="btn btn-success" id="convertButton">Convert</button></td>
+                                    <td ><span id="convertedTotal">Converted Total</span></td>
+                                  </tr>
+                              </table>
                             </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                            </div>
+                        <div class="modal-footer bg-success-subtle">
+                          <button type="button" class="btn btn-success-subtle" data-bs-dismiss="modal">Close</button>
                         </div>
                       </div>
                     </div>
