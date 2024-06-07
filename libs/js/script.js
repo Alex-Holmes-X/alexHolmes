@@ -158,12 +158,12 @@ $(document).ready(function() {
                 
                 success: function(result) {
         
-                    // console.log(JSON.stringify(result));
+                    console.log(JSON.stringify(result));
         
                     if (result) {
                         
-                        const pointsOfInterest = result['results'][0]['geocodes'];
-                        console.log(pointsOfInterest);
+                        
+                        
         
                     
                     }
