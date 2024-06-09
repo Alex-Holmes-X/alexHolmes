@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     // This finds the current location and passes the data to the HTML document
 
-
     navigator.geolocation.getCurrentPosition(showNewPosition);
 
     function showNewPosition(position) {
@@ -78,7 +77,7 @@ $(document).ready(function() {
                     },
                     success: function(result) {
             
-                        // console.log(JSON.stringify(result));
+                        console.log(JSON.stringify(result));
             
                         if (result.status.name == 'ok') {
                             
@@ -122,7 +121,7 @@ $(document).ready(function() {
                     },
                     success: function(result) {
             
-                        // console.log(JSON.stringify(result));
+                        console.log(JSON.stringify(result));
             
                         if (result.status.name == 'ok') {
                                 
@@ -147,34 +146,27 @@ $(document).ready(function() {
             
             })
 
-            $.ajax({
-                url: "./libs/php/pointsOfInterest.php", //Points of interest !!!!
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    latitude: latitude,
-                    longitude: longitude
-                },
+            // $.ajax({
+            //     url: "./libs/php/capitalCitiesData.php", //Points of interest !!!!
+            //     type: 'POST', // DELETE THIS IF NOT USED POI DATA
+            //     dataType: 'json',
+            
                 
-                success: function(result) {
+            //     success: function(result) {
         
-                    console.log(JSON.stringify(result));
+            //         console.log(JSON.stringify(result)); {
+
+                
+            //         }
         
-                    if (result) {
-                        
-                        
-                        
         
+            //     },
+            //     error: function(jqXHR, textStatus, errorThrown) {
                     
-                    }
+            //         console.log(jqXHR);
+            //     }
         
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    
-                    console.log(jqXHR);
-                }
-        
-            })
+            // })
 
                 
     
@@ -369,12 +361,7 @@ $(document).ready(function() {
 
 });
 
-$('#countrySelect').on('change', function() {
-   
-    
-
-
-    
+$('#countrySelect').on('change', function() {  
     
 
     $.ajax({
@@ -397,14 +384,14 @@ $('#countrySelect').on('change', function() {
                 $('#countryCurrency').html(result['data'][0]['currency']['name']);
                 $('#countryMaleLifeExpectancy').html(result['data'][0]['life_expectancy_male']);
                 $('#countryFemaleLifeExpectancy').html(result['data'][0]['life_expectancy_female']);
-                // TODO Add these here and make sure to add above on document ready!
-                // Fertility 
                 $('#countryCapital').html(result['data'][0]['capital']);
-                // Tourist Info
                 $('#countryCo2Emissions').html(result['data'][0]['co2_emissions']);
                 $('#countrySurfaceArea').html(result['data'][0]['surface_area']);
-                //Foreested area
-                // Threatened Specicies
+                $('#countryFertility').html(result['data'][0]['fertility']);
+                $('#countryForrestedArea').html(result['data'][0]['forested_area']);
+                $('#countryTourists').html(result['data'][0]['tourists']);
+                $('#countrySpecies').html(result['data'][0]['threatened_species']);
+                $('#countryRefugees').html(result['data'][0]['refugees']);
                 
                 
             }
@@ -431,6 +418,7 @@ $('#countrySelect').on('change', function() {
                 const currentValue = document.getElementById('countrySelect').value; 
                  // gets the current value of the select dropdown box             
 
+                
                 for (const location of result.data) {
                     if (location.properties.iso_a2 === currentValue) {
                         var mapData = location.geometry;
