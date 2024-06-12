@@ -124,6 +124,5 @@ var overlays = {
 };
 
 L.control.layers(baseLayers).addTo(map);
-L.geoJSON()
 
 
