@@ -7,8 +7,8 @@ $(document).ready(function() {
     function showNewPosition(position) {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-        console.log(latitude);
-        console.log(longitude);
+        // console.log(latitude);
+        // console.log(longitude);
 
         // This populates the data in the current location section in the HTML document.
 
@@ -77,7 +77,7 @@ $(document).ready(function() {
                     },
                     success: function(result) {
             
-                        console.log(JSON.stringify(result));
+                        // console.log(JSON.stringify(result));
             
                         if (result.status.name == 'ok') {
                             
@@ -121,7 +121,7 @@ $(document).ready(function() {
                     },
                     success: function(result) {
             
-                        console.log(JSON.stringify(result));
+                        // console.log(JSON.stringify(result));
             
                         if (result.status.name == 'ok') {
                                 
@@ -144,31 +144,7 @@ $(document).ready(function() {
                         console.log(jqXHR);
                     }
             
-            })
-
-            // $.ajax({
-            //     url: "./libs/php/capitalCitiesData.php", //Points of interest !!!!
-            //     type: 'POST', // DELETE THIS IF NOT USED POI DATA
-            //     dataType: 'json',
-            
-                
-            //     success: function(result) {
-        
-            //         console.log(JSON.stringify(result)); {
-
-                
-            //         }
-        
-        
-            //     },
-            //     error: function(jqXHR, textStatus, errorThrown) {
-                    
-            //         console.log(jqXHR);
-            //     }
-        
-            // })
-
-                
+            })                
     
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -176,7 +152,7 @@ $(document).ready(function() {
                 console.log(jqXHR);
             }
 
-        })
+        });
 
                     // This is the weather API call
 
@@ -250,76 +226,47 @@ $(document).ready(function() {
                     });
 
     }
-        // This call defaults the initial modal buttons to GB
-        $.ajax({
-            url: "./libs/php/countryInformation.php",
-            type: 'POST',
-            dataType: 'json',
-            data: { 
-                countryCode: $('#countrySelect').val()
-    
-            },
-            success: function(result) {
-    
-                // console.log(JSON.stringify(result));
-    
-                if (result.status.name == 'ok') {
-                        
-                    $('#flag-icon').html(result['data'][0]['flag']);
-    
-                    
-                    // Icon images
-                    var flag = (result['data'][0]['flags']['svg']);                
-                    $('#main-country-flag').attr('src', flag);
+                // This call defaults the initial modal buttons to GB
+                $.ajax({
+                    url: "./libs/php/countryInformation.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                        countryCode: $('#countrySelect').val()
             
-                    var coa = (result['data'][0]['coatOfArms']['svg']);                
-                    $('#coat-of-arms').attr('src', coa);
-                    
-                    
-                }
-    
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                
-                console.log(jqXHR);
-            }
-    
-    })
-
-
-
-    
-
-    // $.ajax({
-    //     url: "./libs/php/geoJSONData.php",
-    //     type: 'POST',
-    //     dataType: 'json',
-        
-    //     success: function(result) {
-
-    //         console.log(JSON.stringify(result));
-
-    //         if (result.status.name == 'ok') {
-    //             // Because the json data has already been parsed to an array of just the country names
-    //             // this is the only data that it will summarise so you are just looping through 
-    //             // array 
+                    },
+                    success: function(result) {
+            
+                        // console.log(JSON.stringify(result));
+            
+                        if (result.status.name == 'ok') {
                                 
-    //             for(const country of result.data) {
-    //                 // TODO add in the users country first then all the other countries
-    //                 $('#countrySelect').append(`<option value="${country.iso_a2}">${country.name}</option>`);
-    //             }
-
+                            $('#flag-icon').html(result['data'][0]['flag']);
             
-    //         }
-
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
+                            
+                            // Icon images
+                            var flag = (result['data'][0]['flags']['svg']);                
+                            $('#main-country-flag').attr('src', flag);
+                    
+                            var coa = (result['data'][0]['coatOfArms']['svg']);                
+                            $('#coat-of-arms').attr('src', coa);
+                            
+                            
+                        }
             
-    //         console.log(jqXHR);
-    //     }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        
+                        console.log(jqXHR);
+                    }
+            
+            })
+              
 
-    // })
-    //TODO Turn this back on, using too many calls to website, will run out of API calls
+
+
+
+    // TODO Turn this back on, using too many calls to website, will run out of API calls
     // $.ajax({
     //             url: "./libs/php/currencyInfo.php",
     //             type: 'POST',
@@ -328,7 +275,7 @@ $(document).ready(function() {
         
     //             success: function(result) {
         
-    //                 console.log(JSON.stringify(result));
+    //                 // console.log(JSON.stringify(result));
         
     //                 if (result.status.name == 'ok') {               
                         
@@ -361,6 +308,8 @@ $(document).ready(function() {
 
 });
 
+
+
 $('#countrySelect').on('change', function() {  
     
 
@@ -374,7 +323,7 @@ $('#countrySelect').on('change', function() {
         },
         success: function(result) {
 
-            console.log(JSON.stringify(result));
+            // console.log(JSON.stringify(result));
 
             if (result.status.name == 'ok') {
                     
@@ -393,6 +342,211 @@ $('#countrySelect').on('change', function() {
                 $('#countrySpecies').html(result['data'][0]['threatened_species']);
                 $('#countryRefugees').html(result['data'][0]['refugees']);
                 
+
+                
+
+                
+
+                $.ajax({ // This call needs the country code 
+                    url: "./libs/php/capitalCityInfo.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                        countryCode: $('#countrySelect').val()
+            
+                    },
+                    success: function(result) {
+            
+                        // console.log(JSON.stringify(result));
+            
+                        if (result.status.name == 'ok') {
+                      
+                                
+                        
+                            
+                            var capitalCity = (result['data'][0]['capital']);
+
+                            var northPosition = (result['data'][0]['north']);
+                            var southPosition = (result['data'][0]['south']);
+                            var eastPosition = (result['data'][0]['east']);
+                            var westPosition = (result['data'][0]['west']);
+
+                            
+
+                            $.ajax({ //This call needs the capital city input
+                                url: "./libs/php/cityLatLngData.php",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    captialName: capitalCity
+                                },
+                        
+                                success: function(result) {
+                        
+                                    // console.log(JSON.stringify(result));
+                        
+                                    if (result.status.name == 'ok') {               
+                                       
+                                        var capitalCityLat = (result['data']['lat']);
+                                        var capitalCityLng = (result['data']['lng']);                                    
+                                        
+
+                                        var blueMarker = L.ExtraMarkers.icon({
+                                            icon: 'fa-bolt',
+                                            markerColor: 'white',
+                                            shape: 'star',
+                                            prefix: 'fa'
+                                          });
+                                                    
+                
+                                        var geojsonFeature = {
+                                            "type": "Feature",
+                                            "properties": {
+                                                "popupContent": "The capital is: " +  capitalCity
+                                            },
+                                            "geometry": {
+                                                "type": "Point", 
+                                                "coordinates": [capitalCityLng, capitalCityLat]
+                                            }
+                                        };
+                                        
+                                        function onEachFeature(feature, layer) {
+                                            // does this feature have a property named popupContent?
+                                            if (feature.properties && feature.properties.popupContent) {
+                                                layer.bindPopup(feature.properties.popupContent);
+                                            }
+                                        }
+
+                                        // var myStyle = {
+                                        //     "color": "#ff7800",
+                                        //     "weight": 5,
+                                        //     "opacity": 0.65,
+                                        //     'radius': 8
+                                        // };
+
+                                        // L.geoJSON(geojsonFeature, {
+                                        //     style: myStyle
+                                        // }).addTo(map);
+                        
+                                        L.geoJSON(geojsonFeature, {
+                                            onEachFeature: onEachFeature
+                                        }).addTo(map);   
+                                        
+                                        
+                                        map.flyTo([capitalCityLat, capitalCityLng], 4)
+                                           
+                                    }
+                        
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    
+                                    console.log(jqXHR);
+                                }
+                        
+                            })
+                            
+                            $.ajax({ //This call needs the capital city input
+                                url: "./libs/php/earthquakeData.php",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    north: northPosition,
+                                    south: southPosition,
+                                    east: eastPosition,
+                                    west: westPosition
+                                },
+                        
+                                success: function(result) {
+                        
+                                    console.log(JSON.stringify(result));
+                        
+                                    if (result.status.name == 'ok') {               
+                                      
+                                    
+
+                                    var blueMarker = L.ExtraMarkers.icon({
+                                        icon: 'fa-bolt',
+                                        markerColor: 'blue-dark',
+                                        shape: 'square',
+                                        prefix: 'fa'
+                                      });                                  
+                                        
+                                    
+                                    for (let i = 0; i < result['data'].length; i++) {
+                                    //    console.log(result['data'][i]['lat']) 
+                                       L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: blueMarker}).bindPopup('Magnitude:' + result['data'][i]['magnitude'],).addTo(map)
+
+
+                                    }
+                                    
+                                        
+                                           
+                                    }
+                        
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    
+                                    console.log(jqXHR);
+                                }
+                        
+                            })
+
+                            $.ajax({ //This call needs the capital city input
+                                url: "./libs/php/countryCitiesData.php",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    north: northPosition,
+                                    south: southPosition,
+                                    east: eastPosition,
+                                    west: westPosition
+                                },
+                        
+                                success: function(result) {
+                        
+                                    // console.log(JSON.stringify(result));
+                        
+                                    if (result.status.name == 'ok') {               
+                                    
+                                    // console.log(result['data'][0]['name'])
+                                    
+                                    var redMarker = L.ExtraMarkers.icon({
+                                        icon: 'fa-dot-circle-o',
+                                        markerColor: 'orange-dark',
+                                        shape: 'circle',
+                                        prefix: 'fa'
+                                      });
+
+                                     
+
+                                    for (let i = 0; i < result['data'].length; i++) {
+                                        if(result['data'][i]['countrycode'] === $('#countrySelect').val()) {
+                                            L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: redMarker}).bindPopup('City Name :' + result['data'][i]['name']).addTo(map);
+                                        }                                   
+
+
+                                    }    
+                                        
+                                           
+                                    }
+                        
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    
+                                    console.log(jqXHR);
+                                }
+                        
+                            })
+                            
+                        }
+            
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        
+                        console.log(jqXHR);
+                    }
+            
+            })
                 
             }
 
@@ -411,7 +565,7 @@ $('#countrySelect').on('change', function() {
         
         success: function(result) {
 
-            console.log(JSON.stringify(result));
+            // console.log(JSON.stringify(result));
 
             if (result.status.name == 'ok') {
 
@@ -429,11 +583,11 @@ $('#countrySelect').on('change', function() {
                             var latitude1 = location.geometry.coordinates[0][0][1]; 
                             var longitude2 = location.geometry.coordinates[0][0][0];
                             L.geoJSON(mapData).addTo(map);
-                            map.flyTo([latitude1, longitude2], 4)
+                            // map.flyTo([latitude1, longitude2], 4)
 
                         } else {
                             L.geoJSON(mapData).addTo(map);                        
-                            map.flyTo([latitude, longitude], 4)
+                            // map.flyTo([latitude, longitude], 4)
 
                         }                        
                        
@@ -462,59 +616,59 @@ $('#countrySelect').on('change', function() {
 
 // This is just to make sure i can do the maths on the inputted values
 
-$('#convertButton').on('click', function() {
+// $('#convertButton').on('click', function() {
 
-    // When the api function has been sorted, take the inputted value, * it by the selected 
-    // currency and then sumaryise the total
+//     // When the api function has been sorted, take the inputted value, * it by the selected 
+//     // currency and then sumaryise the total
     
-    const convertedAmount = document.getElementById('amount').value;
+//     const convertedAmount = document.getElementById('amount').value;
 
-    const roundedTotal = Math.round(convertedAmount * 100) / 100;
+//     const roundedTotal = Math.round(convertedAmount * 100) / 100;
 
-    const conversionRate = document.getElementById('currencyName1').value; // add in api response
+//     const conversionRate = document.getElementById('currencyName1').value; // add in api response
 
-    const convertedTotal = roundedTotal * conversionRate;
+//     const convertedTotal = roundedTotal * conversionRate;
 
-    $('#convertedTotal').html(convertedTotal);
+//     $('#convertedTotal').html(convertedTotal);
 
-})
+// })
 
 
-$('#getCurrencyRates').on('click', function () {
-    $.ajax({
-        url: "./libs/php/currencyInfo.php",
-        type: 'POST',
-        dataType: 'json',
+// $('#getCurrencyRates').on('click', function () {
+//     $.ajax({
+//         url: "./libs/php/currencyInfo.php",
+//         type: 'POST',
+//         dataType: 'json',
         
 
-        success: function(result) {
+//         success: function(result) {
 
-            // console.log(JSON.stringify(result));
+//             // console.log(JSON.stringify(result));
 
-            if (result.status.name == 'ok') {               
+//             if (result.status.name == 'ok') {               
                 
-               let e1 = document.getElementById('currency1');
-               let value1 = e1.value
-               console.log(value1);
-               $('#currencyName1').html(result['data']['rates'][value1]); 
+//                let e1 = document.getElementById('currency1');
+//                let value1 = e1.value
+//                console.log(value1);
+//                $('#currencyName1').html(result['data']['rates'][value1]); 
 
-               let e2 = document.getElementById('currency2');
-               let value2 = e2.value
-               console.log(value2);
-               $('#currencyName2').html(result['data']['rates'][value2]);
-                //    **** This just needs to be the value * the currency rate        
-            }
+//                let e2 = document.getElementById('currency2');
+//                let value2 = e2.value
+//                console.log(value2);
+//                $('#currencyName2').html(result['data']['rates'][value2]);
+//                 //    **** This just needs to be the value * the currency rate        
+//             }
 
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
+//         },
+//         error: function(jqXHR, textStatus, errorThrown) {
             
-            console.log(jqXHR);
-        }
+//             console.log(jqXHR);
+//         }
 
-    })
-});
+//     })
+// });
 
-// TODO Turn this back on when ready to make calls to currency site
+// // TODO Turn this back on when ready to make calls to currency site
 
 // $('#convertButton').on('click', function() {
 
