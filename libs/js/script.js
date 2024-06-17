@@ -144,153 +144,145 @@ $(document).ready(function() {
             
             })
             
-            $.ajax({
-                url: "./libs/php/countryNewsInfo.php",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    country: countryValue
-                },
-                
-                success: function(result) {
-        
-                    console.log(JSON.stringify(result));
-        
-                    if (result.status.name == 'ok') {
-                        
-                        $('#topStoryTitle1').html(result['data'][0]['title']);
-                        $('#topStory1Desc').html(result['data'][0]['description']);
-                        $('#topStory1Link').html(result['data'][0]['link']);
-                        var topStory1Icon = result['data'][0]['image_url'];                        
-                        $('#topStory1Image').attr('src', topStory1Icon);
-                        var urlLink1 = (result['data'][0]['link']);
-                        $('#topStory1Link').attr('href', urlLink1);
-
-                        
-                        $('#topStoryTitle2').html(result['data'][1]['title']);
-                        $('#topStory2Desc').html(result['data'][1]['description']);
-                        $('#topStory2Link').html(result['data'][1]['link']);
-                        var topStory2Icon = result['data'][1]['image_url'];                        
-                        $('#topStory2Image').attr('src', topStory2Icon);
-                        var urlLink2 = (result['data'][1]['link']);
-                        $('#topStory2Link').attr('href', urlLink2);
-
-                        $('#topStoryTitle3').html(result['data'][2]['title']);
-                        $('#topStory3Desc').html(result['data'][2]['description']);
-                        $('#topStory3Link').html(result['data'][2]['link']);
-                        var topStory3Icon = result['data'][2]['image_url'];                        
-                        $('#topStory3Image').attr('src', topStory3Icon);
-                        var urlLink3 = (result['data'][2]['link']);
-                        $('#topStory3Link').attr('href', urlLink3);
-                        
-                        $('#topStoryTitle4').html(result['data'][3]['title']);
-                        $('#topStory4Desc').html(result['data'][3]['description']);
-                        $('#topStory4Link').html(result['data'][3]['link']);
-                        var topStory4Icon = result['data'][3]['image_url'];                        
-                        $('#topStory4Image').attr('src', topStory4Icon);
-                        var urlLink4 = (result['data'][3]['link']);
-                        $('#topStory4Link').attr('href', urlLink4);
-
-                        $('#topStoryTitle5').html(result['data'][4]['title']);
-                        $('#topStory5Desc').html(result['data'][4]['description']);
-                        $('#topStory5Link').html(result['data'][4]['link']);
-                        var topStory5Icon = result['data'][4]['image_url'];                        
-                        $('#topStory5Image').attr('src', topStory5Icon);
-                        var urlLink5 = (result['data'][4]['link']);
-                        $('#topStory5Link').attr('href', urlLink5);
-                        
-
-                        
-                        
+                $.ajax({
+                    url: "./libs/php/countryNewsInfo.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        country: countryValue
+                    },
                     
-                    }
-        
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    
-                    console.log(jqXHR);
-                }
-        
-            })
-    
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                
-                console.log(jqXHR);
-            }
-
-        });
-
-                    // This is the weather API call
-
-                    var apiKey = 'f6c21b786b9ae229c8b4f120f3761eaf';
-                    // var exclusions = [minutely,hourly,daily,alerts];   
-
-                    $.ajax({
-                        url: "./libs/php/weatherData.php",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            latitude: latitude,
-                            longitude: longitude,
-                            apiKey: apiKey,
-                            exclusions: 'minutely,hourly'
-                
-                        },
-                        success: function(result) {
-                
-                            // console.log(JSON.stringify(result));
-                
-                            if (result.status.name == 'ok') {
-                                // put new date conversion for seconds here
-                                // add in 
-                                $('#current-temperature').html(result['data']['current']['temp']);
-                                $('#feels-like').html(result['data']['current']['feels_like']);
-                                $('#humidity').html(result['data']['current']['humidity']);
-                                $('#wind-speed').html(result['data']['current']['wind_speed']);
-                                $('#time-zone').html(result['data']['timezone']);                               
-                                $('#weatherOverview').html(result['data']['daily'][0]['summary'])
-                                $('#dailyAverage').html(result['data']['daily'][0]['temp']['day']);
-                                $('#dailyLow').html(result['data']['daily'][0]['temp']['min']);
-                                $('#dailyMax').html(result['data']['daily'][0]['temp']['max']);
-                                $('#dailyNight').html(result['data']['daily'][0]['temp']['night']);
-                                
-                                
-
-                                
-                                
-                                // This is used to create the weather icon
-                                var iconCode = (result['data']['current']['weather'][0]['icon']);
-                                
-                                var iconUrl = 'https://openweathermap.org/img/wn/' + iconCode + '@2x.png';
-
-                                const sunriseTimestamp = (result['data']['current']['sunrise']) * 1000;
-                                const sunriseDate = new Date(sunriseTimestamp);
-
-                                const sunsetTimestamp = (result['data']['current']['sunset']) * 1000;
-                                const sunsetDate = new Date(sunsetTimestamp);
-
-                                var sunrise = sunriseDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-                                
-                                var sunset = sunsetDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-                               
-
-                                $('#weatherIcon').attr('src', iconUrl);                        
-
-                                $('#sunrise').html(sunrise);
-                                $('#sunset').html(sunset);
-                                
-
-                                
-                            }
-                
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                    success: function(result) {
+            
+                        // console.log(JSON.stringify(result));
+            
+                        if (result.status.name == 'ok') {
                             
-                            console.log(jqXHR);
+                            $('#topStoryTitle1').html(result['data'][0]['title']);
+                            $('#topStory1Desc').html(result['data'][0]['description']);
+                            $('#topStory1Link').html(result['data'][0]['link']);
+                            var topStory1Icon = result['data'][0]['image_url'];                        
+                            $('#topStory1Image').attr('src', topStory1Icon);
+                            var urlLink1 = (result['data'][0]['link']);
+                            $('#topStory1Link').attr('href', urlLink1);
+
+                            
+                            $('#topStoryTitle2').html(result['data'][1]['title']);
+                            $('#topStory2Desc').html(result['data'][1]['description']);
+                            $('#topStory2Link').html(result['data'][1]['link']);
+                            var topStory2Icon = result['data'][1]['image_url'];                        
+                            $('#topStory2Image').attr('src', topStory2Icon);
+                            var urlLink2 = (result['data'][1]['link']);
+                            $('#topStory2Link').attr('href', urlLink2);
+
+                            $('#topStoryTitle3').html(result['data'][2]['title']);
+                            $('#topStory3Desc').html(result['data'][2]['description']);
+                            $('#topStory3Link').html(result['data'][2]['link']);
+                            var topStory3Icon = result['data'][2]['image_url'];                        
+                            $('#topStory3Image').attr('src', topStory3Icon);
+                            var urlLink3 = (result['data'][2]['link']);
+                            $('#topStory3Link').attr('href', urlLink3);
+                            
+                            $('#topStoryTitle4').html(result['data'][3]['title']);
+                            $('#topStory4Desc').html(result['data'][3]['description']);
+                            $('#topStory4Link').html(result['data'][3]['link']);
+                            var topStory4Icon = result['data'][3]['image_url'];                        
+                            $('#topStory4Image').attr('src', topStory4Icon);
+                            var urlLink4 = (result['data'][3]['link']);
+                            $('#topStory4Link').attr('href', urlLink4);
+
+                            $('#topStoryTitle5').html(result['data'][4]['title']);
+                            $('#topStory5Desc').html(result['data'][4]['description']);
+                            $('#topStory5Link').html(result['data'][4]['link']);
+                            var topStory5Icon = result['data'][4]['image_url'];                        
+                            $('#topStory5Image').attr('src', topStory5Icon);
+                            var urlLink5 = (result['data'][4]['link']);
+                            $('#topStory5Link').attr('href', urlLink5);
+                            
+
+                            
+                            
+                        
+                        }
+            
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        
+                        console.log(jqXHR);
+                    }
+            
+                })
+
+                // This is the weather API call
+
+                var apiKey = 'f6c21b786b9ae229c8b4f120f3761eaf';
+                // var exclusions = [minutely,hourly,daily,alerts];   
+
+                $.ajax({
+                    url: "./libs/php/weatherData.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        latitude: latitude,
+                        longitude: longitude,
+                        apiKey: apiKey,
+                        exclusions: 'minutely,hourly'
+            
+                    },
+                    success: function(result) {
+            
+                        // console.log(JSON.stringify(result));
+            
+                        if (result.status.name == 'ok') {
+                            // put new date conversion for seconds here
+                            // add in 
+                            $('#current-temperature').html(result['data']['current']['temp']);
+                            $('#feels-like').html(result['data']['current']['feels_like']);
+                            $('#humidity').html(result['data']['current']['humidity']);
+                            $('#wind-speed').html(result['data']['current']['wind_speed']);
+                            $('#time-zone').html(result['data']['timezone']);                               
+                            $('#weatherOverview').html(result['data']['daily'][0]['summary'])
+                            $('#dailyAverage').html(result['data']['daily'][0]['temp']['day']);
+                            $('#dailyLow').html(result['data']['daily'][0]['temp']['min']);
+                            $('#dailyMax').html(result['data']['daily'][0]['temp']['max']);
+                            $('#dailyNight').html(result['data']['daily'][0]['temp']['night']);
+                            
+                            
+
+                            
+                            
+                            // This is used to create the weather icon
+                            var iconCode = (result['data']['current']['weather'][0]['icon']);
+                            
+                            var iconUrl = 'https://openweathermap.org/img/wn/' + iconCode + '@2x.png';
+
+                            const sunriseTimestamp = (result['data']['current']['sunrise']) * 1000;
+                            const sunriseDate = new Date(sunriseTimestamp);
+
+                            const sunsetTimestamp = (result['data']['current']['sunset']) * 1000;
+                            const sunsetDate = new Date(sunsetTimestamp);
+
+                            var sunrise = sunriseDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+                            
+                            var sunset = sunsetDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+                           
+
+                            $('#weatherIcon').attr('src', iconUrl);                        
+
+                            $('#sunrise').html(sunrise);
+                            $('#sunset').html(sunset);
+                            
+
                             
                         }
-                    });
+            
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        
+                        console.log(jqXHR);
+                        
+                    }
+                })
 
                     // This call defaults the initial modal buttons to GB
                 $.ajax({
@@ -341,18 +333,15 @@ $(document).ready(function() {
         
                         const currentValue = document.getElementById('countrySelect').value; 
                          // gets the current value of the select dropdown box             
-                        // console.log(currentValue);
-
+                        
+                    
                         
                         for (const location of result.data) {
                             if (location.properties.iso_a2 === currentValue) {
                                 var mapData = location.geometry;
-                                var latitude = location.geometry.coordinates[0][0][0][1]; 
-                                var longitude = location.geometry.coordinates[0][0][0][0];
                                 
+
                                 if(longitude === undefined) {
-                                    var latitude1 = location.geometry.coordinates[0][0][1]; 
-                                    var longitude2 = location.geometry.coordinates[0][0][0];
                                     L.geoJSON(mapData).addTo(map);
                                     // map.flyTo([latitude1, longitude2], 4)
         
@@ -377,6 +366,23 @@ $(document).ready(function() {
                 }
         
             })
+
+
+
+    
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                
+                console.log(jqXHR);
+            }
+
+        });
+
+                    ;
+
+                
+
+        
 
                        
 
@@ -504,7 +510,7 @@ $('#countrySelect').on('change', function() {
                         
                                 success: function(result) {
                         
-                                    console.log(JSON.stringify(result));
+                                    // console.log(JSON.stringify(result));
                         
                                     if (result.status.name == 'ok') {               
                                        
@@ -524,22 +530,27 @@ $('#countrySelect').on('change', function() {
                                                 "coordinates": [capitalCityLng, capitalCityLat]
                                             }
                                         };
+                                    
                                         
                                         function onEachFeature(feature, layer) {
                                             // does this feature have a property named popupContent?
                                             if (feature.properties && feature.properties.popupContent) {
-                                                layer.bindPopup(feature.properties.popupContent);
+                                                layer.bindPopup(feature.properties.popupContent)
+                                                
                                             }
                                         }
-
+                                        
+                                        
+                                        
                                                                 
                                         L.geoJSON(geojsonFeature, {
-                                            onEachFeature: onEachFeature
-                                        }).addTo(map);   
+                                            onEachFeature: onEachFeature,                                            
+                                        });   
                                         
                                         
                                         map.flyTo([capitalCityLat, capitalCityLng], 4)
-                                           
+                                        
+                                        
                                     }
 
 
@@ -559,7 +570,7 @@ $('#countrySelect').on('change', function() {
                                         },
                                         success: function(result) {
                                     
-                                            console.log(JSON.stringify(result));
+                                            // console.log(JSON.stringify(result));
                                     
                                             if (result.status.name == 'ok') {
                                                 // put new date conversion for seconds here
@@ -575,8 +586,8 @@ $('#countrySelect').on('change', function() {
                                                 $('#dailyMax').html(result['data']['daily'][0]['temp']['max']);
                                                 $('#dailyNight').html(result['data']['daily'][0]['temp']['night']);
                                                 
-                                                console.log(capitalCityLat);
-                                                console.log(capitalCityLng);
+                                                // console.log(capitalCityLat);
+                                                // console.log(capitalCityLng);
                                     
                                                 
                                                 
@@ -585,37 +596,26 @@ $('#countrySelect').on('change', function() {
                                                 
                                                 var iconUrl = 'https://openweathermap.org/img/wn/' + iconCode + '@2x.png';
                                                 
-                                                var timeZoneOffset = (result['data']['timezone_offset']);
-                                                console.log(timeZoneOffset);
-                                                
-                                                
-                                                
-                                                const sunriseTimestamp = (result['data']['current']['sunrise']);
-                                                const adjustedTime = sunriseTimestamp + timeZoneOffset;
-                                                const sunriseDate = new Date(adjustedTime);
-                                                console.log(sunriseTimestamp);
-                                                console.log(adjustedTime)
-                                                
-                                    
+
+                                                // Timezone Adjustmet
+                                                var timeZoneOffset = (result['data']['timezone_offset'] * 1000);                                            
+                                                var daylightSaving = 3600000;
+                                                // Sunrise Time Stamps
+                                                const sunriseTimestamp = (result['data']['current']['sunrise']) * 1000;                                                
+                                                var adjustedTimeSunrise = sunriseTimestamp + timeZoneOffset - daylightSaving;                                                
+                                                const sunriseDate = new Date(adjustedTimeSunrise);
+                                                // Sunset Time Stamps
                                                 const sunsetTimestamp = (result['data']['current']['sunset']) * 1000;
-                                                const sunsetDate = new Date(sunsetTimestamp);
+                                                var adjustedTimeSunset = sunsetTimestamp + timeZoneOffset - daylightSaving;
+                                                const sunsetDate = new Date(adjustedTimeSunset);
+                                                // Sunrise & Sunset Output                                                                             
+                                                var sunrise = sunriseDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+                                                var sunset = sunsetDate.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
 
-                                                var currentTimeZone = $('#countrySelect').val();
+                     
 
-                                                // You need to create the variabes globally then have these
-                                                //available after carring out the sum function to get the time offset 
-                                                //correct, otherwise the dates will show wrong
-                                                
-                                                
-
-
-                                    
-                                                var sunrise = sunriseDate.toLocaleDateString('en-' + currentTimeZone, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-                                                
-                                                var sunset = sunsetDate.toLocaleDateString('en-' + currentTimeZone, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-                                               
-                                                var sunRise = $('#sunrise').html(sunrise);
-                                                var sunSet = $('#sunset').html(sunset);
+                                                $('#sunrise').html(sunrise);
+                                                $('#sunset').html(sunset);
 
                                     
                                                 $('#weatherIcon').attr('src', iconUrl);                        
@@ -668,12 +668,13 @@ $('#countrySelect').on('change', function() {
                                         prefix: 'fa'
                                       });                                  
                                         
-                                    
+                                    var markers = L.markerClusterGroup();
+
                                     for (let i = 0; i < result['data'].length; i++) {
                                         
                                     //    L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: blueMarker}).bindPopup('Magnitude:' + result['data'][i]['magnitude'],).addTo(map)
 
-                                       var markers = L.markerClusterGroup();
+                                       
                                        markers.addLayer(L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: blueMarker}).bindPopup('Magnitude:' + result['data'][i]['magnitude'],));
                                        map.addLayer(markers);
 
@@ -718,11 +719,12 @@ $('#countrySelect').on('change', function() {
                                       });
 
                                      
+                                    var cityMarkers = L.markerClusterGroup();
 
                                     for (let i = 0; i < result['data'].length; i++) {
                                         if(result['data'][i]['countrycode'] === $('#countrySelect').val()) {
                                         //    L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: redMarker}).bindPopup('City Name :' + result['data'][i]['name']).addTo(map);
-                                        var cityMarkers = L.markerClusterGroup();
+                                        
                                         cityMarkers.addLayer(L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: redMarker}).bindPopup('City Name :' + result['data'][i]['name']));
                                         map.addLayer(cityMarkers);
 
@@ -772,7 +774,7 @@ $('#countrySelect').on('change', function() {
         
         success: function(result) {
 
-            console.log(JSON.stringify(result));
+            // console.log(JSON.stringify(result));
 
             if (result.status.name == 'ok') {
                 
