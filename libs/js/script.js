@@ -1,3 +1,10 @@
+// Border removal variables
+
+var markers = null;
+var cityMarker = null;
+var border = null;
+var initialBorder = null;
+
 $(document).ready(function() {
 
     // This finds the current location and passes the data to the HTML document
@@ -50,7 +57,7 @@ $(document).ready(function() {
                             // array 
                                             
                             for(const country of result.data) {
-                                // TODO add in the users country first then all the other countries
+                                
                                 $('#countrySelect').append(`<option value="${country.iso_a2}">${country.name}</option>`);
                             }
             
@@ -328,13 +335,23 @@ $(document).ready(function() {
                 success: function(result) {
         
                     // console.log(JSON.stringify(result));
+
+                    if(initialBorder){
+
+                        initialBorder.clearLayers();
+        
+                    } 
         
                     if (result.status.name == 'ok') {
-        
+                        
+                        // BOOKMARK initial border load
+
+                        initialBorder = L.markerClusterGroup();
+
                         const currentValue = document.getElementById('countrySelect').value; 
                          // gets the current value of the select dropdown box             
                         
-                    
+                        
                         
                         for (const location of result.data) {
                             if (location.properties.iso_a2 === currentValue) {
@@ -342,11 +359,15 @@ $(document).ready(function() {
                                 
 
                                 if(longitude === undefined) {
-                                    L.geoJSON(mapData).addTo(map);
+                                    initialBorder.addLayer(L.geoJSON(mapData))
+                                    map.addLayer(initialBorder);
+                                    
                                     // map.flyTo([latitude1, longitude2], 4)
         
                                 } else {
-                                    L.geoJSON(mapData).addTo(map);                        
+                                    initialBorder.addLayer(L.geoJSON(mapData))
+                                    map.addLayer(initialBorder);
+                                                          
                                     // map.flyTo([latitude, longitude], 4)
         
                                 }                        
@@ -377,12 +398,7 @@ $(document).ready(function() {
             }
 
         });
-
-                    ;
-
-                
-
-        
+    
 
                        
 
@@ -393,7 +409,7 @@ $(document).ready(function() {
 
 
 
-    // TODO Turn this back on, using too many calls to website, will run out of API calls
+    // Turn this back on, using too many calls to website, will run out of API calls
     $.ajax({
                 url: "./libs/php/currencyInfo.php",
                 type: 'POST',
@@ -438,7 +454,8 @@ $(document).ready(function() {
 
 
 $('#countrySelect').on('change', function() {  
-    
+                
+   initialBorder.clearLayers(); 
 
     $.ajax({
         url: "./libs/php/countryStatistics.php",
@@ -642,6 +659,7 @@ $('#countrySelect').on('change', function() {
                         
                             })
                             
+                            
                             $.ajax({ //This call needs the capital city input
                                 url: "./libs/php/earthquakeData.php",
                                 type: 'POST',
@@ -656,10 +674,18 @@ $('#countrySelect').on('change', function() {
                                 success: function(result) {
                         
                                     // console.log(JSON.stringify(result));
+
+                                    //BOOKMARK earthquake call
+                                    if(markers){
+
+                                        markers.clearLayers();
+                        
+                                    } 
                         
                                     if (result.status.name == 'ok') {               
-                                      
                                     
+                                         
+                                      
 
                                     var blueMarker = L.ExtraMarkers.icon({
                                         icon: 'fa-bolt',
@@ -668,21 +694,21 @@ $('#countrySelect').on('change', function() {
                                         prefix: 'fa'
                                       });                                  
                                         
-                                    var markers = L.markerClusterGroup();
+                                    markers = L.markerClusterGroup();
+
 
                                     for (let i = 0; i < result['data'].length; i++) {
                                         
-                                    //    L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: blueMarker}).bindPopup('Magnitude:' + result['data'][i]['magnitude'],).addTo(map)
-
+                                    // 
                                        
                                        markers.addLayer(L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: blueMarker}).bindPopup('Magnitude:' + result['data'][i]['magnitude'],));
                                        map.addLayer(markers);
-
+                                       
                                     }
+                                     
                                     
-                                        
-                                           
-                                    }
+                                    }                                   
+
                         
                                 },
                                 error: function(jqXHR, textStatus, errorThrown) {
@@ -706,6 +732,12 @@ $('#countrySelect').on('change', function() {
                                 success: function(result) {
                         
                                     // console.log(JSON.stringify(result));
+                                    if(cityMarker){
+
+                                        cityMarker.clearLayers();
+                        
+                                    } 
+                                    
                         
                                     if (result.status.name == 'ok') {               
                                     
@@ -719,20 +751,17 @@ $('#countrySelect').on('change', function() {
                                       });
 
                                      
-                                    var cityMarkers = L.markerClusterGroup();
+                                    cityMarker = L.markerClusterGroup();
 
                                     for (let i = 0; i < result['data'].length; i++) {
                                         if(result['data'][i]['countrycode'] === $('#countrySelect').val()) {
                                         //    L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: redMarker}).bindPopup('City Name :' + result['data'][i]['name']).addTo(map);
                                         
-                                        cityMarkers.addLayer(L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: redMarker}).bindPopup('City Name :' + result['data'][i]['name']));
-                                        map.addLayer(cityMarkers);
+                                        cityMarker.addLayer(L.marker([result['data'][i]['lat'], result['data'][i]['lng']], {icon: redMarker}).bindPopup('City Name :' + result['data'][i]['name']));
+                                        map.addLayer(cityMarker);
 
-                                        }
-                                                             
-
-                                    }    
-                                        
+                                        }                                                             
+                                    }                                            
                                            
                                     }
                         
@@ -778,7 +807,7 @@ $('#countrySelect').on('change', function() {
 
             if (result.status.name == 'ok') {
                 
-                $('#topStoryTitle1').html(result['data'][0]['title']);
+                        $('#topStoryTitle1').html(result['data'][0]['title']);
                         $('#topStory1Desc').html(result['data'][0]['description']);
                         $('#topStory1Link').html(result['data'][0]['link']);
                         var topStory1Icon = result['data'][0]['image_url'];                        
@@ -834,12 +863,18 @@ $('#countrySelect').on('change', function() {
 
     })
 
-    $.ajax({
+    $.ajax({   // BOOKMARK Border data 
         url: "./libs/php/geoJSONCountryBorders.php",
         type: 'POST',
         dataType: 'json',
         
         success: function(result) {
+
+            if(border){
+                
+                border.clearLayers();
+
+            } 
 
             // console.log(JSON.stringify(result));
 
@@ -847,22 +882,26 @@ $('#countrySelect').on('change', function() {
 
                 const currentValue = document.getElementById('countrySelect').value; 
                  // gets the current value of the select dropdown box             
-
+                 border = L.markerClusterGroup();
                 
                 for (const location of result.data) {
                     if (location.properties.iso_a2 === currentValue) {
-                        var mapData = location.geometry;
-                        var latitude = location.geometry.coordinates[0][0][0][1]; 
-                        var longitude = location.geometry.coordinates[0][0][0][0];
+                        mapData = location.geometry; // remove VAR and use mapdata
+                        // var latitude = location.geometry.coordinates[0][0][0][1]; 
+                        // var longitude = location.geometry.coordinates[0][0][0][0];
                         // console.log(mapData)
                         if(longitude === undefined) {
-                            var latitude1 = location.geometry.coordinates[0][0][1]; 
-                            var longitude2 = location.geometry.coordinates[0][0][0];
-                            L.geoJSON(mapData).addTo(map);
+                            // var latitude1 = location.geometry.coordinates[0][0][1]; 
+                            // var longitude2 = location.geometry.coordinates[0][0][0];
+                            border.addLayer(L.geoJSON(mapData))
+                            map.addLayer(border);
+                            // L.geoJSON(mapData).addTo(map);
                             // map.flyTo([latitude1, longitude2], 4)
 
                         } else {
-                            L.geoJSON(mapData).addTo(map);                        
+                            border.addLayer(L.geoJSON(mapData))
+                            map.addLayer(border);
+                            // L.geoJSON(mapData).addTo(map);                        
                             // map.flyTo([latitude, longitude], 4)
 
                         }                        
@@ -979,7 +1018,7 @@ $('#getCurrencyRates').on('click', function () {
     })
 });
 
-// TODO Turn this back on when ready to make calls to currency site
+//Turn this back on when ready to make calls to currency site
 
 $('#convertButton').on('click', function() {
 

@@ -1,10 +1,13 @@
-body {
-    padding: 0;
-    margin: 0;
+html, body {
+  margin: 0;
+  padding: 0;
 }
-html, body, #map {
-    height: 100%;
-    width: 100vw;
+
+#map {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 #selectContainer {
@@ -12,7 +15,7 @@ html, body, #map {
     top: 0;
     z-index: 1000;
     width: 100%;
-    padding: 60px 0;
+    padding: 11px 0;
   }
   
   #countrySelect {
