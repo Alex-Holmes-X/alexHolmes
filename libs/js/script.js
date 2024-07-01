@@ -15,6 +15,7 @@ $(document).ready(function() {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
 
+        
         // This populates the data in the current location section in the HTML document.
 
         $.ajax({
@@ -29,7 +30,7 @@ $(document).ready(function() {
             },
             success: function(result) {
     
-                // console.log(JSON.stringify(result));
+                console.log(JSON.stringify(result));
     
                 if (result.status.name == 'ok') {
                         
@@ -40,6 +41,8 @@ $(document).ready(function() {
                     var countryValue= (result['data']['results'][0]['components']['ISO_3166-1_alpha-2'])
                     $('#countrySelect').append(`<option value="${countryValue}">My Location</option>`);
                     
+                    console.log(latitude);
+                    console.log(longitude);
                 }
 
                 $.ajax({
@@ -388,6 +391,8 @@ $(document).ready(function() {
         
             })
 
+            // next one here
+
 
 
     
@@ -675,7 +680,7 @@ $('#countrySelect').on('change', function() {
                         
                                     // console.log(JSON.stringify(result));
 
-                                    //BOOKMARK earthquake call
+                                    
                                     if(markers){
 
                                         markers.clearLayers();
@@ -863,7 +868,7 @@ $('#countrySelect').on('change', function() {
 
     })
 
-    $.ajax({   // BOOKMARK Border data 
+    $.ajax({   
         url: "./libs/php/geoJSONCountryBorders.php",
         type: 'POST',
         dataType: 'json',

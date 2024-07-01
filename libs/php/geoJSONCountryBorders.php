@@ -14,9 +14,10 @@
     $countryBorders = [];
 
     for($i = 0; $i < count($decode['features']); $i++) {
-        array_push($countryBorders,$decode['features'][$i]); 
+        array_push($countryBorders,$decode['features'][$i]);
+        
     };  
-
+    asort($countryBorders) ;
     
 
 
